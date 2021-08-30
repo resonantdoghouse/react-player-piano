@@ -1,0 +1,42 @@
+.Piano {
+  overflow: scroll;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  &__Key {
+    flex-shrink: 0;
+    width: 32px;
+    height: 128px;
+    border: 1px solid black;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: 0.25s ease-out;
+    &:active {
+      cursor: none;
+      background: violet;
+    }
+    &--lh-active {
+      cursor: none;
+      background: lightgreen;
+    }
+    &--rh-active {
+      cursor: none;
+      background: skyblue;
+    }
+    &::selection {
+      background: transparent;
+    }
+    &--sharp {
+      background: black;
+      color: white;
+      height: 96px;
+      width: 24px;
+      margin-left: -12px;
+      margin-right: -12px;
+      z-index: 99;
+    }
+  }
+}
