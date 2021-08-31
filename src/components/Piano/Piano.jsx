@@ -5,19 +5,20 @@ import pianoKeys from './pianoKeys.json';
 import './Piano.scss';
 import pianoSampler from './pianoSampler';
 // song data
-import avril14 from '../../data/songs/avril14.json';
-import canon from '../../data/songs/canon.json';
-import jynweythekYlow from '../../data/songs/jynweythekYlow.json';
-import superMario from '../../data/songs/superMario.json';
-import jurassicPark from '../../data/songs/jurassicPark.json';
-import theEntertainer from '../../data/songs/entertainer.json';
+import avril14 from './data/songs/avril14.json';
+import canon from './data/songs/canon.json';
+import jynweythekYlow from './data/songs/jynweythekYlow.json';
+import superMario from './data/songs/superMario.json';
+import jurassicPark from './data/songs/jurassicPark.json';
+import theEntertainer from './data/songs/entertainer.json';
+import airOnTheGString from './data/songs/airOnTheGString.json';
 
 function Piano() {
   const pianoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [keyElements, setKeyElements] = useState([]);
   const [activeKey, setActiveKey] = useState(null);
-  const [bpm, setBpm] = useState(120);
+  // const [bpm, setBpm] = useState(120);
   const [melodyPart, setMelodyPart] = useState();
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(null);
@@ -40,6 +41,11 @@ function Piano() {
       artist: 'Scott Joplin',
       data: theEntertainer,
     },
+    {
+      title: 'Air on the G String',
+      artist: 'Johann Sebastian Bach',
+      data: airOnTheGString,
+    },
   ]);
 
   /*
@@ -47,7 +53,7 @@ function Piano() {
    */
   useEffect(() => {
     setupKeys();
-    setActiveSong(songData[3]);
+    setActiveSong(songData[0]);
   }, []);
 
   useEffect(() => {
@@ -85,7 +91,6 @@ function Piano() {
       (element) => element.getAttribute('data-note') === note.name
     );
     if (keyElement) {
-      // setActiveKey(note.name);
       if (hand === 'rh') {
         keyElement.classList.add('Piano__Key--rh-active');
       } else if (hand === 'lh') {
@@ -158,22 +163,23 @@ function Piano() {
       <div className="Piano" ref={pianoRef}>
         {keyElements}
       </div>
-      <button onClick={handlePlaySong}>play</button>
-      <select onChange={handleSelectSong}>
-        {songData.map((song) => {
-          if (activeSong) {
-            if (song.title == activeSong.title) {
-              return (
-                <option key={song.title} selected>
-                  {song.title}
-                </option>
-              );
-            } else {
-              return <option key={song.title}>{song.title}</option>;
-            }
-          }
-        })}
-      </select>
+      <button onClick={handlePlaySong}>{!isPlaying ? 'play' : 'pause'}</button>
+      {activeSong && (
+        <select onChange={handleSelectSong} defaultValue={activeSong.title}>
+          {[...songData]
+            .sort((a, b) => {
+              if (a.title > b.title) {
+                return 1;
+              } else {
+                return -1;
+              }
+            })
+            .map((song) => (
+              <option key={song.title}>{song.title}</option>
+            ))}
+        </select>
+      )}
+
       <p>{activeKey}</p>
     </>
   );
