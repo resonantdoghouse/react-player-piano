@@ -1,4 +1,5 @@
 .Piano {
+  margin: 32px auto;
   overflow: scroll;
   display: flex;
   align-items: flex-start;
@@ -14,7 +15,17 @@
     justify-content: center;
     position: relative;
     transition: 0.25s ease-out;
-    &:active {
+    &--sharp {
+      background: black;
+      color: white;
+      height: 96px;
+      width: 24px;
+      margin-left: -12px;
+      margin-right: -12px;
+      z-index: 99;
+    }
+    &:active,
+    &--active {
       cursor: none;
       background: violet;
     }
@@ -28,15 +39,6 @@
     }
     &::selection {
       background: transparent;
-    }
-    &--sharp {
-      background: black;
-      color: white;
-      height: 96px;
-      width: 24px;
-      margin-left: -12px;
-      margin-right: -12px;
-      z-index: 99;
     }
   }
 }
