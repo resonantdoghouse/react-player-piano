@@ -22,7 +22,7 @@ function Piano() {
   const [activeKey, setActiveKey] = useState(null);
   const [melodyPart, setMelodyPart] = useState();
   const [bassPart, setBassPart] = useState();
-  const [activeSong, setActiveSong] = useState(null);
+
   const [songData] = useState([
     { title: 'Avril 14', artist: 'Aphex Twin', data: avril14 },
     {
@@ -54,6 +54,7 @@ function Piano() {
       data: airOnTheGString,
     },
   ]);
+  const [activeSong, setActiveSong] = useState(songData[0]);
 
   /*
    * Component Mount
@@ -85,8 +86,8 @@ function Piano() {
     });
 
     setKeyElements(mappedKeys);
-    setActiveSong(songData[0]);
-  }, [songData]);
+    // setActiveSong(songData[0]);
+  }, []);
 
   useEffect(() => {
     if (activeSong) {
@@ -99,7 +100,7 @@ function Piano() {
             time,
             note.velocity
           );
-          animateKey(note, keyElements, 'rh');
+          animateKey(note, 'rh');
         }, activeSong.data.tracks[0].notes).start()
       );
       // left hand
@@ -111,13 +112,13 @@ function Piano() {
             time,
             note.velocity
           );
-          animateKey(note, keyElements, 'lh');
+          animateKey(note, 'lh');
         }, activeSong.data.tracks[1].notes).start()
       );
     }
-  }, [activeSong, keyElements]);
+  }, [activeSong]);
 
-  const animateKey = (note, keyElements, hand) => {
+  const animateKey = (note, hand) => {
     const keysArray = Array.from(pianoKeysRef.current.children);
     const keyElement = keysArray.find(
       (element) => element.getAttribute('data-note') === note.name
