@@ -6,26 +6,33 @@ import './Piano.scss';
 import pianoSampler from './pianoSampler';
 // song data
 import avril14 from './data/songs/avril14.json';
+import aisatsana from './data/songs/aisatsana.json';
 import canon from './data/songs/canon.json';
 import jynweythekYlow from './data/songs/jynweythekYlow.json';
+import tommib from './data/songs/tommib.json';
 import superMario from './data/songs/superMario.json';
 import jurassicPark from './data/songs/jurassicPark.json';
 import theEntertainer from './data/songs/entertainer.json';
 import airOnTheGString from './data/songs/airOnTheGString.json';
 
 function Piano() {
-  const pianoRef = useRef(null);
+  const pianoKeysRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [keyElements, setKeyElements] = useState([]);
   const [activeKey, setActiveKey] = useState(null);
-  // const [bpm, setBpm] = useState(120);
   const [melodyPart, setMelodyPart] = useState();
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(null);
   const [songData, setSongData] = useState([
     { title: 'Avril 14', artist: 'Aphex Twin', data: avril14 },
+    {
+      title: 'Aisatsana',
+      artist: 'Aphex Twin',
+      data: aisatsana,
+    },
     { title: 'Canon', artist: 'Johann Pachelbel', data: canon },
     { title: 'Jynweythek Ylow', artist: 'Aphex Twin', data: jynweythekYlow },
+    { title: 'Tommib', artist: 'Squarepusher', data: tommib },
     {
       title: 'Super Mario Bros',
       artist: 'Koji Kondo',
@@ -86,7 +93,7 @@ function Piano() {
   }, [activeSong]);
 
   const animateKey = (note, keyElements, hand) => {
-    const keysArray = Array.from(pianoRef.current.children);
+    const keysArray = Array.from(pianoKeysRef.current.children);
     const keyElement = keysArray.find(
       (element) => element.getAttribute('data-note') === note.name
     );
@@ -160,27 +167,31 @@ function Piano() {
 
   return (
     <>
-      <div className="Piano" ref={pianoRef}>
-        {keyElements}
-      </div>
-      <button onClick={handlePlaySong}>{!isPlaying ? 'play' : 'pause'}</button>
-      {activeSong && (
-        <select onChange={handleSelectSong} defaultValue={activeSong.title}>
-          {[...songData]
-            .sort((a, b) => {
-              if (a.title > b.title) {
-                return 1;
-              } else {
-                return -1;
-              }
-            })
-            .map((song) => (
-              <option key={song.title}>{song.title}</option>
-            ))}
-        </select>
-      )}
+      <div className="Piano">
+        <div className="Piano__controls">
+          <button onClick={handlePlaySong} className="Piano__play-toggle">
+            {!isPlaying ? 'play' : 'pause'}
+          </button>
+          {activeSong && (
+            <select
+              onChange={handleSelectSong}
+              defaultValue={activeSong.title}
+              className="Piano__song-select"
+            >
+              {[...songData]
+                .sort((a, b) => (a.title > b.title ? 1 : -1))
+                .map((song) => (
+                  <option key={song.title}>{song.title}</option>
+                ))}
+            </select>
+          )}
+        </div>
 
-      <p>{activeKey}</p>
+        <div className="Piano__keys" ref={pianoKeysRef}>
+          {keyElements}
+        </div>
+      </div>
+      {/* <p>{activeKey}</p> */}
     </>
   );
 }

@@ -1,10 +1,60 @@
 .Piano {
+  background: black;
+  border-radius: 10px;
+  padding: 0.625rem;
   margin: 32px auto;
+  display: inline-flex;
+  flex-direction: column;
   overflow: scroll;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  &__controls {
+    padding: 1.5rem;
+  }
+  &__play-toggle {
+    border-radius: 3px;
+    margin: 0 3px;
+    padding: 0.625rem;
+    border: 0;
+    background: white;
+    border: 1px solid white;
+    &:hover {
+      background: rgb(212, 243, 255);
+    }
+    &:focus {
+      background: white;
+      border-color: skyblue;
+    }
+    &:active {
+      background: skyblue;
+      border-color: skyblue;
+    }
+    &::selection {
+      background: transparent;
+    }
+  }
+  &__song-select {
+    border-radius: 3px;
+    margin: 0 3px;
+    padding: 0.625rem;
+    background: white;
+    border: 1px solid white;
+    &:hover {
+      background: rgb(212, 243, 255);
+    }
+    &:focus {
+      background: white;
+      border: 1px solid skyblue;
+      outline: none;
+    }
+    &::selection {
+      background: transparent;
+    }
+  }
+  &__keys {
+    display: inline-flex;
+  }
   &__Key {
+    background: white;
+    border-radius: 3px;
     flex-shrink: 0;
     width: 32px;
     height: 160px;
