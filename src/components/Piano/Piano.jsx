@@ -130,7 +130,7 @@ function Piano() {
 
   const handleSelectSong = (event) => {
     const found = songData.find((song) => {
-      return song.title == event.target.value;
+      return song.title === event.target.value;
     });
     melodyPart.clear();
     bassPart.clear();
