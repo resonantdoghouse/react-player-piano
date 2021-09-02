@@ -191,7 +191,7 @@ function Piano() {
           {keyElements}
         </div>
       </div>
-      {/* <p>{activeKey}</p> */}
+      <p>{activeKey}</p>
     </>
   );
 }
