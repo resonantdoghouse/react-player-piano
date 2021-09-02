@@ -23,7 +23,7 @@ function Piano() {
   const [melodyPart, setMelodyPart] = useState();
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(null);
-  const [songData, setSongData] = useState([
+  const [songData] = useState([
     { title: 'Avril 14', artist: 'Aphex Twin', data: avril14 },
     {
       title: 'Aisatsana',
@@ -59,9 +59,34 @@ function Piano() {
    * Component Mount
    */
   useEffect(() => {
-    setupKeys();
+    const mappedKeys = pianoKeys.map((key, i) => {
+      if (key.includes('#')) {
+        return (
+          <Key
+            key={i}
+            note={key}
+            data-note={key}
+            handleKeyPress={handleKeyPress}
+            isActive={false}
+            isSharp
+          />
+        );
+      } else {
+        return (
+          <Key
+            key={i}
+            note={key}
+            data-note={key}
+            handleKeyPress={handleKeyPress}
+            isActive={false}
+          />
+        );
+      }
+    });
+
+    setKeyElements(mappedKeys);
     setActiveSong(songData[0]);
-  }, []);
+  }, [songData]);
 
   useEffect(() => {
     if (activeSong) {
@@ -90,7 +115,7 @@ function Piano() {
         }, activeSong.data.tracks[1].notes).start()
       );
     }
-  }, [activeSong]);
+  }, [activeSong, keyElements]);
 
   const animateKey = (note, keyElements, hand) => {
     const keysArray = Array.from(pianoKeysRef.current.children);
@@ -135,34 +160,6 @@ function Piano() {
     melodyPart.clear();
     bassPart.clear();
     setActiveSong(found);
-  };
-
-  const setupKeys = () => {
-    const mappedKeys = pianoKeys.map((key, i) => {
-      if (key.includes('#')) {
-        return (
-          <Key
-            key={i}
-            note={key}
-            data-note={key}
-            handleKeyPress={handleKeyPress}
-            isActive={false}
-            isSharp
-          />
-        );
-      } else {
-        return (
-          <Key
-            key={i}
-            note={key}
-            data-note={key}
-            handleKeyPress={handleKeyPress}
-            isActive={false}
-          />
-        );
-      }
-    });
-    setKeyElements(mappedKeys);
   };
 
   return (
