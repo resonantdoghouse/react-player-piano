@@ -84,9 +84,7 @@ function Piano() {
         );
       }
     });
-
     setKeyElements(mappedKeys);
-    // setActiveSong(songData[0]);
   }, []);
 
   useEffect(() => {
@@ -94,24 +92,29 @@ function Piano() {
       // right hand
       setMelodyPart(
         new Tone.Part(function (time, note) {
-          pianoSampler.triggerAttackRelease(
-            note.name,
-            note.duration,
-            time,
-            note.velocity
-          );
+          if (pianoSampler.loaded) {
+            pianoSampler.triggerAttackRelease(
+              note.name,
+              note.duration,
+              time,
+              note.velocity
+            );
+          }
+
           animateKey(note, 'rh');
         }, activeSong.data.tracks[0].notes).start()
       );
       // left hand
       setBassPart(
         new Tone.Part(function (time, note) {
-          pianoSampler.triggerAttackRelease(
-            note.name,
-            note.duration,
-            time,
-            note.velocity
-          );
+          if (pianoSampler.loaded) {
+            pianoSampler.triggerAttackRelease(
+              note.name,
+              note.duration,
+              time,
+              note.velocity
+            );
+          }
           animateKey(note, 'lh');
         }, activeSong.data.tracks[1].notes).start()
       );
@@ -137,7 +140,9 @@ function Piano() {
   };
 
   const handleKeyPress = (event) => {
-    pianoSampler.triggerAttackRelease([event.target.dataset.note], 0.5);
+    if (pianoSampler.loaded) {
+      pianoSampler.triggerAttackRelease([event.target.dataset.note], 0.5);
+    }
     setActiveKey(event.target.dataset.note);
   };
 
