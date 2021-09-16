@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use '../../../styles/partials/variables';
 
 .Key {
@@ -18,8 +19,8 @@
     color: variables.$piano-key-color;
     height: 65%;
     width: variables.$piano-key-width * 0.9;
-    margin-left: -(variables.$piano-key-width / 2) * 0.9;
-    margin-right: -(variables.$piano-key-width / 2) * 0.9;
+    margin-left: -(math.div(variables.$piano-key-width, 2)) * 0.9;
+    margin-right: -(math.div(variables.$piano-key-width, 2)) * 0.9;
     z-index: 99;
   }
   &:active,
