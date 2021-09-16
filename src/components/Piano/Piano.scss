@@ -1,11 +1,17 @@
+@use '../../styles/partials/variables';
+
 .Piano {
-  background: black;
+  background: variables.$piano-body-color;
   border-radius: 10px;
   padding: 0.625rem;
   margin: 32px auto;
   display: inline-flex;
   flex-direction: column;
   overflow: scroll;
+  width: 96%;
+  max-width: 1080px;
+  display: flex;
+  // flex-direction: column;
   &__controls {
     padding: 1.5rem;
   }
@@ -51,44 +57,12 @@
   }
   &__keys {
     display: inline-flex;
+    justify-content: center;
+    height: 25vw;
+    min-height: 100px;
+    max-height: 200px;
   }
   &__Key {
-    background: white;
-    border-radius: 3px;
     flex-shrink: 0;
-    width: 32px;
-    height: 160px;
-    border: 1px solid black;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transition: 0.25s ease-out;
-    &--sharp {
-      background: black;
-      color: white;
-      height: 110px;
-      width: 24px;
-      margin-left: -12px;
-      margin-right: -12px;
-      z-index: 99;
-    }
-    &:active,
-    &--active {
-      cursor: none;
-      background: violet;
-    }
-    &--lh-active {
-      cursor: none;
-      background: lightgreen;
-    }
-    &--rh-active {
-      cursor: none;
-      background: skyblue;
-    }
-    &::selection {
-      background: transparent;
-    }
   }
 }

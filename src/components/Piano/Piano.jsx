@@ -1,59 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
-import Key from './Key';
+import Key from './Key/';
 import pianoKeys from './pianoKeys.json';
-import './Piano.scss';
 import pianoSampler from './pianoSampler';
-// song data
-import avril14 from './data/songs/avril14.json';
-import aisatsana from './data/songs/aisatsana.json';
-import canon from './data/songs/canon.json';
-import jynweythekYlow from './data/songs/jynweythekYlow.json';
-import tommib from './data/songs/tommib.json';
-import superMario from './data/songs/superMario.json';
-import jurassicPark from './data/songs/jurassicPark.json';
-import theEntertainer from './data/songs/entertainer.json';
-import airOnTheGString from './data/songs/airOnTheGString.json';
+import './Piano.scss';
 
-function Piano() {
+const Piano = ({ songData }) => {
   const pianoKeysRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [keyElements, setKeyElements] = useState([]);
   const [activeKey, setActiveKey] = useState(null);
   const [melodyPart, setMelodyPart] = useState();
   const [bassPart, setBassPart] = useState();
-
-  const [songData] = useState([
-    { title: 'Avril 14', artist: 'Aphex Twin', data: avril14 },
-    {
-      title: 'Aisatsana',
-      artist: 'Aphex Twin',
-      data: aisatsana,
-    },
-    { title: 'Canon', artist: 'Johann Pachelbel', data: canon },
-    { title: 'Jynweythek Ylow', artist: 'Aphex Twin', data: jynweythekYlow },
-    { title: 'Tommib', artist: 'Squarepusher', data: tommib },
-    {
-      title: 'Super Mario Bros',
-      artist: 'Koji Kondo',
-      data: superMario,
-    },
-    {
-      title: 'Jurassic Park',
-      artist: 'John Williams',
-      data: jurassicPark,
-    },
-    {
-      title: 'The Entertainer',
-      artist: 'Scott Joplin',
-      data: theEntertainer,
-    },
-    {
-      title: 'Air on the G String',
-      artist: 'Johann Sebastian Bach',
-      data: airOnTheGString,
-    },
-  ]);
   const [activeSong, setActiveSong] = useState(songData[0]);
 
   /*
@@ -87,11 +45,12 @@ function Piano() {
     setKeyElements(mappedKeys);
   }, []);
 
+  // active song changed
   useEffect(() => {
     if (activeSong) {
       // right hand
       setMelodyPart(
-        new Tone.Part(function (time, note) {
+        new Tone.Part((time, note) => {
           if (pianoSampler.loaded) {
             pianoSampler.triggerAttackRelease(
               note.name,
@@ -100,13 +59,12 @@ function Piano() {
               note.velocity
             );
           }
-
           animateKey(note, 'rh');
         }, activeSong.data.tracks[0].notes).start()
       );
       // left hand
       setBassPart(
-        new Tone.Part(function (time, note) {
+        new Tone.Part((time, note) => {
           if (pianoSampler.loaded) {
             pianoSampler.triggerAttackRelease(
               note.name,
@@ -121,6 +79,7 @@ function Piano() {
     }
   }, [activeSong]);
 
+  // Key Animation
   const animateKey = (note, hand) => {
     const keysArray = Array.from(pianoKeysRef.current.children);
     const keyElement = keysArray.find(
@@ -128,13 +87,13 @@ function Piano() {
     );
     if (keyElement) {
       if (hand === 'rh') {
-        keyElement.classList.add('Piano__Key--rh-active');
+        keyElement.classList.add('Key--rh-active');
       } else if (hand === 'lh') {
-        keyElement.classList.add('Piano__Key--lh-active');
+        keyElement.classList.add('Key--lh-active');
       }
       setTimeout(() => {
-        keyElement.classList.remove('Piano__Key--lh-active');
-        keyElement.classList.remove('Piano__Key--rh-active');
+        keyElement.classList.remove('Key--lh-active');
+        keyElement.classList.remove('Key--rh-active');
       }, note.duration * 1000);
     }
   };
@@ -146,6 +105,7 @@ function Piano() {
     setActiveKey(event.target.dataset.note);
   };
 
+  // Toggle play pause
   const handlePlaySong = () => {
     if (!isPlaying) {
       Tone.Transport.start();
@@ -168,8 +128,13 @@ function Piano() {
     setActiveSong(found);
   };
 
+  if (!songData) {
+    return <p>Loading song data...</p>;
+  }
+
   return (
     <>
+      <h1>Player Piano</h1>
       <div className="Piano">
         <div className="Piano__controls">
           <button onClick={handlePlaySong} className="Piano__play-toggle">
@@ -189,14 +154,45 @@ function Piano() {
             </select>
           )}
         </div>
-
         <div className="Piano__keys" ref={pianoKeysRef}>
           {keyElements}
         </div>
       </div>
-      <p>{activeKey}</p>
+      {activeSong ? (
+        <>
+          <h2>{activeSong.title}</h2>
+          <p>{activeSong.artist}</p>
+          <img src={activeSong.img} alt={activeSong.title} />
+
+          {activeSong.data.header.bpm && (
+            <p>BPM {activeSong.data.header.bpm}</p>
+          )}
+
+          {activeSong.data.header.tempos &&
+          activeSong.data.header.tempos.length === 1 ? (
+            <p>
+              BPM{' '}
+              {activeSong.data.header.tempos.map((tempo, i) => {
+                return <span key={i}>{tempo.bpm.toFixed(2)}</span>;
+              })}
+            </p>
+          ) : null}
+
+          {activeSong.data.header.tempos &&
+          activeSong.data.header.tempos.length > 1 ? (
+            <p>
+              BPMs
+              <ul>
+                {activeSong.data.header.tempos.map((tempo, i) => {
+                  return <li key={i}>{tempo.bpm.toFixed(2)}</li>;
+                })}
+              </ul>
+            </p>
+          ) : null}
+        </>
+      ) : null}
     </>
   );
-}
+};
 
 export default Piano;

@@ -1,0 +1,41 @@
+@use '../../../styles/partials/variables';
+
+.Key {
+  background: variables.$piano-key-color;
+  border-radius: 3px;
+  flex-shrink: 0;
+  width: variables.$piano-key-width;
+  height: 100%;
+  border: 1px solid black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: 0.2s ease-out;
+  &--sharp {
+    background: variables.$piano-key-sharp-color;
+    color: variables.$piano-key-color;
+    height: 65%;
+    width: variables.$piano-key-width * 0.9;
+    margin-left: -(variables.$piano-key-width / 2) * 0.9;
+    margin-right: -(variables.$piano-key-width / 2) * 0.9;
+    z-index: 99;
+  }
+  &:active,
+  &--active {
+    cursor: none;
+    background: variables.$paino-key-active-color;
+  }
+  &--lh-active {
+    cursor: none;
+    background: variables.$paino-key-active-lh-color;
+  }
+  &--rh-active {
+    cursor: none;
+    background: variables.$paino-key-active-rh-color;
+  }
+  &::selection {
+    background: transparent;
+  }
+}
