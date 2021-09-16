@@ -103,6 +103,7 @@ const Piano = ({ songData }) => {
       pianoSampler.triggerAttackRelease([event.target.dataset.note], 0.5);
     }
     setActiveKey(event.target.dataset.note);
+    console.log(activeKey);
   };
 
   // Toggle play pause
