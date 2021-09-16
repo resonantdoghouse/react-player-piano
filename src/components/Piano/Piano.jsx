@@ -192,6 +192,7 @@ const Piano = ({ songData }) => {
           ) : null}
         </>
       ) : null}
+      <p className="activeKeyInfo">{activeKey}</p>
     </>
   );
 };
