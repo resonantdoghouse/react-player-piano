@@ -14,6 +14,10 @@
   // flex-direction: column;
   &__controls {
     padding: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
   }
   &__play-toggle {
     border-radius: 3px;
@@ -67,6 +71,36 @@
   }
 }
 
-.activeKeyInfo {
+.activeSong {
+  display: flex;
+  align-items: flex-start;
+  &__title {
+    margin: 0;
+  }
+  &__artist {
+    margin: 0;
+  }
+  &__img {
+    max-width: 100%;
+    width: 150px;
+    padding: 0 10px 10px;
+  }
+  &__bpm {
+    margin: 0;
+  }
+}
+
+.bpmList {
+  overflow: scroll;
+  max-height: 50px;
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  &__item {
+    border-bottom: 1px solid black;
+  }
+}
+
+.activeKey--hidden {
   display: none;
 }

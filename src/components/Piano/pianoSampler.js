@@ -36,8 +36,5 @@ export default new Tone.Sampler(
   {
     release: 1,
     baseUrl: './audio/piano-samples/',
-    // onload: () => {
-    //   console.log('pianoSampler samples loaded');
-    // },
   }
 ).toDestination();

@@ -103,7 +103,6 @@ const Piano = ({ songData }) => {
       pianoSampler.triggerAttackRelease([event.target.dataset.note], 0.5);
     }
     setActiveKey(event.target.dataset.note);
-    console.log(activeKey);
   };
 
   // Toggle play pause
@@ -134,66 +133,79 @@ const Piano = ({ songData }) => {
   }
 
   return (
-    <>
+    <main>
       <h1>Player Piano</h1>
       <div className="Piano">
-        <div className="Piano__controls">
-          <button onClick={handlePlaySong} className="Piano__play-toggle">
-            {!isPlaying ? 'play' : 'pause'}
-          </button>
-          {activeSong && (
-            <select
-              onChange={handleSelectSong}
-              defaultValue={activeSong.title}
-              className="Piano__song-select"
-            >
-              {[...songData]
-                .sort((a, b) => (a.title > b.title ? 1 : -1))
-                .map((song) => (
-                  <option key={song.title}>{song.title}</option>
-                ))}
-            </select>
-          )}
-        </div>
+        <section className="Piano__controls">
+          <nav>
+            <button onClick={handlePlaySong} className="Piano__play-toggle">
+              {!isPlaying ? 'play' : 'pause'}
+            </button>
+            {activeSong && (
+              <select
+                onChange={handleSelectSong}
+                defaultValue={activeSong.title}
+                className="Piano__song-select"
+              >
+                {[...songData]
+                  .sort((a, b) => (a.title > b.title ? 1 : -1))
+                  .map((song) => (
+                    <option key={song.title}>{song.title}</option>
+                  ))}
+              </select>
+            )}
+          </nav>
+          {activeSong ? (
+            <article className="Piano__activeSong activeSong">
+              <header>
+                <h2 className="activeSong__title">{activeSong.title}</h2>
+                <p className="activeSong__artist">{activeSong.artist}</p>
+
+                {activeSong.data.header.bpm && (
+                  <p className="activeSong__bpm">
+                    BPM {activeSong.data.header.bpm}
+                  </p>
+                )}
+                {activeSong.data.header.tempos &&
+                activeSong.data.header.tempos.length === 1 ? (
+                  <p className="activeSong__bpm">
+                    BPM{' '}
+                    {activeSong.data.header.tempos.map((tempo, i) => {
+                      return <span key={i}>{tempo.bpm.toFixed(2)}</span>;
+                    })}
+                  </p>
+                ) : null}
+
+                {activeSong.data.header.tempos &&
+                activeSong.data.header.tempos.length > 1 ? (
+                  <div className="activeSong__bpm">
+                    BPMs
+                    <ul className="activeSong__bpmList bpmList">
+                      {activeSong.data.header.tempos.map((tempo, i) => {
+                        return (
+                          <li key={i} className="bpmList__item">
+                            {tempo.bpm.toFixed(2)}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ) : null}
+              </header>
+              <img
+                src={activeSong.img}
+                alt={activeSong.title}
+                className="activeSong__img"
+              />
+            </article>
+          ) : null}
+        </section>
         <div className="Piano__keys" ref={pianoKeysRef}>
           {keyElements}
         </div>
       </div>
-      {activeSong ? (
-        <>
-          <h2>{activeSong.title}</h2>
-          <p>{activeSong.artist}</p>
-          <img src={activeSong.img} alt={activeSong.title} />
-
-          {activeSong.data.header.bpm && (
-            <p>BPM {activeSong.data.header.bpm}</p>
-          )}
-
-          {activeSong.data.header.tempos &&
-          activeSong.data.header.tempos.length === 1 ? (
-            <p>
-              BPM{' '}
-              {activeSong.data.header.tempos.map((tempo, i) => {
-                return <span key={i}>{tempo.bpm.toFixed(2)}</span>;
-              })}
-            </p>
-          ) : null}
-
-          {activeSong.data.header.tempos &&
-          activeSong.data.header.tempos.length > 1 ? (
-            <p>
-              BPMs
-              <ul>
-                {activeSong.data.header.tempos.map((tempo, i) => {
-                  return <li key={i}>{tempo.bpm.toFixed(2)}</li>;
-                })}
-              </ul>
-            </p>
-          ) : null}
-        </>
-      ) : null}
-      <p className="activeKeyInfo">{activeKey}</p>
-    </>
+      <div className="activeKey--hidden">{activeKey}</div>
+    </main>
   );
 };
 

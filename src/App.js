@@ -11,6 +11,7 @@ import superMario from './data/songs/superMario.json';
 import jurassicPark from './data/songs/jurassicPark.json';
 import theEntertainer from './data/songs/entertainer.json';
 import airOnTheGString from './data/songs/airOnTheGString.json';
+import chopinNocturnOpN2 from './data/songs/chopinNocturneOp9N2.json';
 
 const App = () => {
   const [songData] = useState([
@@ -66,7 +67,13 @@ const App = () => {
       title: 'Air on the G String',
       artist: 'Johann Sebastian Bach',
       data: airOnTheGString,
-      img: 'https://picsum.photos/id/908/200/300',
+      img: 'https://picsum.photos/id/908/200/200',
+    },
+    {
+      title: 'Nocturne Op.9 No.2',
+      artist: 'Chopin',
+      data: chopinNocturnOpN2,
+      img: 'https://picsum.photos/id/908/200/200',
     },
   ]);
 
