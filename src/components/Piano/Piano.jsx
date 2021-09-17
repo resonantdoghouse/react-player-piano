@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import * as Tone from 'tone';
 import Key from './Key/';
 import pianoKeys from './pianoKeys.json';
-import pianoSampler from './pianoSampler';
+import pianoSampler, { filter, reverb } from './pianoSampler';
 import './Piano.scss';
 
 const Piano = ({ songData }) => {
@@ -131,6 +131,12 @@ const Piano = ({ songData }) => {
   if (!songData) {
     return <p>Loading song data...</p>;
   }
+
+  /*
+   * Effect Levels
+   */
+  filter.set({ wet: 0 });
+  reverb.set({ wet: 0.6 });
 
   return (
     <main>

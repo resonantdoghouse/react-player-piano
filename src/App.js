@@ -12,6 +12,10 @@ import jurassicPark from './data/songs/jurassicPark.json';
 import theEntertainer from './data/songs/entertainer.json';
 import airOnTheGString from './data/songs/airOnTheGString.json';
 import chopinNocturnOpN2 from './data/songs/chopinNocturneOp9N2.json';
+import moonlightSonata from './data/songs/moonlightSonata.json';
+import lotrMainTheme from './data/songs/lotrMainTheme.json';
+import zeldasLullaby from './data/songs/zeldasLullaby.json';
+import whiterShadeOfPale from './data/songs/whiterShadeOfPale.json';
 
 const App = () => {
   const [songData] = useState([
@@ -74,6 +78,30 @@ const App = () => {
       artist: 'Chopin',
       data: chopinNocturnOpN2,
       img: 'https://picsum.photos/id/908/200/200',
+    },
+    {
+      title: 'Moonlight Sonata',
+      artist: 'Ludwig Van Beethoven',
+      data: moonlightSonata,
+      img: 'https://picsum.photos/id/912/200/200',
+    },
+    {
+      title: 'Lord Of The Rings - Medley',
+      artist: 'Howard Shore, arranged by Alex Lag',
+      data: lotrMainTheme,
+      img: 'https://picsum.photos/id/913/200/200',
+    },
+    {
+      title: "Zelda's Lullaby",
+      artist: 'Koji Kondo',
+      data: zeldasLullaby,
+      img: 'https://picsum.photos/id/914/200/200',
+    },
+    {
+      title: 'A Whiter Shade Of Pale',
+      artist: 'Procol Harum',
+      data: whiterShadeOfPale,
+      img: 'https://picsum.photos/id/915/200/200',
     },
   ]);
 

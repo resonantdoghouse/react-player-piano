@@ -1,6 +1,7 @@
 @use '../../styles/partials/variables';
 
 .Piano {
+  min-width: 356px;
   background: variables.$piano-body-color;
   border-radius: 10px;
   padding: 0.625rem;

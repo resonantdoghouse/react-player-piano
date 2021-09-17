@@ -1,6 +1,9 @@
 import * as Tone from 'tone';
 
-export default new Tone.Sampler(
+export const filter = new Tone.AutoFilter(4).start();
+export const reverb = new Tone.Reverb(0.4);
+
+const pianoSampler = new Tone.Sampler(
   {
     A0: 'A0.[mp3|ogg]',
     C1: 'C1.[mp3|ogg]',
@@ -37,4 +40,8 @@ export default new Tone.Sampler(
     release: 1,
     baseUrl: './audio/piano-samples/',
   }
-).toDestination();
+);
+
+pianoSampler.chain(filter, reverb, Tone.Destination);
+
+export default pianoSampler;
