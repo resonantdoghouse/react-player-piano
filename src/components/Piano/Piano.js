@@ -3,6 +3,7 @@ import * as Tone from 'tone';
 import Key from './Key/';
 import pianoKeys from './pianoKeys.json';
 import pianoSampler, { filter, reverb } from './pianoSampler';
+import { randomFromArray } from '../../lib/utils';
 import './Piano.scss';
 
 const Piano = ({ songData }) => {
@@ -12,10 +13,17 @@ const Piano = ({ songData }) => {
   const [activeKey, setActiveKey] = useState(null);
   const [melodyPart, setMelodyPart] = useState();
   const [bassPart, setBassPart] = useState();
-  const [activeSong, setActiveSong] = useState(songData[0]);
+  const [activeSong, setActiveSong] = useState(randomFromArray(songData));
+
+  /*
+   * Effect Levels
+   */
+  filter.set({ wet: 0 });
+  reverb.set({ wet: 0.5 });
 
   /*
    * Component Mount
+   * Loop to create Piano Keys
    */
   useEffect(() => {
     const mappedKeys = pianoKeys.map((key, i) => {
@@ -128,45 +136,57 @@ const Piano = ({ songData }) => {
     setActiveSong(found);
   };
 
+  // song data json files are quite large!
   if (!songData) {
     return <p>Loading song data...</p>;
   }
 
-  /*
-   * Effect Levels
-   */
-  filter.set({ wet: 0 });
-  reverb.set({ wet: 0.6 });
-
   return (
     <main>
-      <h1>Player Piano</h1>
+      <h1 className="hidden">React Player Piano</h1>
       <div className="Piano">
-        <section className="Piano__controls">
-          <nav>
-            <button onClick={handlePlaySong} className="Piano__play-toggle">
-              {!isPlaying ? 'play' : 'pause'}
-            </button>
-            {activeSong && (
-              <select
-                onChange={handleSelectSong}
-                defaultValue={activeSong.title}
-                className="Piano__song-select"
-              >
-                {[...songData]
-                  .sort((a, b) => (a.title > b.title ? 1 : -1))
-                  .map((song) => (
-                    <option key={song.title}>{song.title}</option>
-                  ))}
-              </select>
-            )}
+        <section className="Piano__controls controls">
+          {/*
+           * Controls
+           * Play/Pause, Song Select, FX Toggle
+           */}
+          <nav className="controls__nav">
+            <div>
+              <button onClick={handlePlaySong} className="Piano__play-toggle">
+                {!isPlaying ? 'play' : 'pause'}
+              </button>
+              {activeSong && (
+                <select
+                  onChange={handleSelectSong}
+                  defaultValue={activeSong.title}
+                  className="Piano__song-select"
+                >
+                  {[...songData]
+                    .sort((a, b) => (a.title > b.title ? 1 : -1))
+                    .map((song) => (
+                      <option key={song.title}>{song.title}</option>
+                    ))}
+                </select>
+              )}
+            </div>
+            <div>
+              <button className="Piano__reverb-toggle">Toggle Reverb</button>
+              <button className="Piano__filter-toggle">Toggle Filter</button>
+            </div>
           </nav>
           {activeSong ? (
             <article className="Piano__activeSong activeSong">
+              {/*
+               * Controls
+               * Play/Pause, Song Select, FX Toggle
+               */}
               <header>
                 <h2 className="activeSong__title">{activeSong.title}</h2>
                 <p className="activeSong__artist">{activeSong.artist}</p>
-
+                {/*
+                 * BPM & BPM list
+                 * If more than 1 Tempo is set the list is rendered
+                 */}
                 {activeSong.data.header.bpm && (
                   <p className="activeSong__bpm">
                     BPM {activeSong.data.header.bpm}
@@ -206,11 +226,15 @@ const Piano = ({ songData }) => {
             </article>
           ) : null}
         </section>
+        {/*
+         * Piano Keys 🎹
+         */}
         <div className="Piano__keys" ref={pianoKeysRef}>
           {keyElements}
         </div>
       </div>
-      <div className="activeKey--hidden">{activeKey}</div>
+      {/* Fixes compilation error, no unused vars, going to use this later! */}
+      <div className="hidden">{activeKey}</div>
     </main>
   );
 };

@@ -12,15 +12,21 @@
   width: 96%;
   max-width: 1080px;
   display: flex;
-  // flex-direction: column;
   &__controls {
-    padding: 1.5rem;
+    background: lighten(variables.$color-black, 10%);
+    border-radius: 10px;
+    color: variables.$color-white;
+    border: 1px solid darken(variables.$color-white, 50%);
+    padding: 0.375rem 2rem;
+    margin: 0 0 10px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
   }
-  &__play-toggle {
+  &__play-toggle,
+  &__reverb-toggle,
+  &__filter-toggle {
     border-radius: 3px;
     margin: 0 3px;
     padding: 0.625rem;
@@ -84,7 +90,8 @@
   &__img {
     max-width: 100%;
     width: 150px;
-    padding: 0 10px 10px;
+    margin: 0 10px 10px;
+    border-radius: 10px;
   }
   &__bpm {
     margin: 0;
@@ -102,6 +109,8 @@
   }
 }
 
-.activeKey--hidden {
-  display: none;
+.controls {
+  &__nav {
+    display: flex;
+  }
 }
