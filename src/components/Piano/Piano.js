@@ -14,10 +14,10 @@ const Piano = ({ songData }) => {
   const [melodyPart, setMelodyPart] = useState();
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(randomFromArray(songData));
+  const [filterLevel, setFilterLevel] = useState(0);
+  // const [reverbLevel, setReverbLevel] = useState(0.5);
 
-  /*
-   * Effect Levels
-   */
+  // init fx levels, todo move this into state or useEffect
   filter.set({ wet: 0 });
   reverb.set({ wet: 0.5 });
 
@@ -52,6 +52,9 @@ const Piano = ({ songData }) => {
     });
     setKeyElements(mappedKeys);
   }, []);
+
+  // useEffect(() => reverb.set({ wet: reverbLevel }), [reverbLevel]);
+  useEffect(() => filter.set({ wet: filterLevel }), [filterLevel]);
 
   // active song changed
   useEffect(() => {
@@ -136,6 +139,22 @@ const Piano = ({ songData }) => {
     setActiveSong(found);
   };
 
+  // const handleToggleReverb = () => {
+  //   if (reverbLevel === 0) {
+  //     setReverbLevel(0.5);
+  //   } else {
+  //     setReverbLevel(0);
+  //   }
+  // };
+
+  const handleToggleFilter = () => {
+    if (filterLevel === 0) {
+      setFilterLevel(1);
+    } else {
+      setFilterLevel(0);
+    }
+  };
+
   // song data json files are quite large!
   if (!songData) {
     return <p>Loading song data...</p>;
@@ -170,8 +189,22 @@ const Piano = ({ songData }) => {
               )}
             </div>
             <div>
-              <button className="Piano__reverb-toggle">Toggle Reverb</button>
-              <button className="Piano__filter-toggle">Toggle Filter</button>
+              {/* <button
+                onClick={handleToggleReverb}
+                className={`Piano__reverb-toggle ${
+                  reverbLevel !== 0 ? 'Piano__reverb-toggle--active' : null
+                }`}
+              >
+                Reverb
+              </button> */}
+              <button
+                onClick={handleToggleFilter}
+                className={`Piano__filter-toggle ${
+                  filterLevel !== 0 ? 'Piano__filter-toggle--active' : null
+                }`}
+              >
+                Filter Effect
+              </button>
             </div>
           </nav>
           {activeSong ? (

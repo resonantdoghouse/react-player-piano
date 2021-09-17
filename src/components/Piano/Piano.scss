@@ -37,10 +37,11 @@
       background: rgb(212, 243, 255);
     }
     &:focus {
-      background: white;
-      border-color: skyblue;
+      background: skyblue;
+      border-color: white;
     }
-    &:active {
+    &:active,
+    &--active {
       background: skyblue;
       border-color: skyblue;
     }
