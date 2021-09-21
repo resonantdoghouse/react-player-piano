@@ -8,7 +8,7 @@
   margin: 32px auto;
   display: inline-flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: hidden;
   width: 96%;
   max-width: 1080px;
   display: flex;
@@ -100,7 +100,7 @@
 }
 
 .bpmList {
-  overflow: scroll;
+  overflow-y: scroll;
   max-height: 50px;
   list-style: none;
   margin: 0;
