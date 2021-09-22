@@ -18,6 +18,7 @@ import zeldasLullaby from './data/songs/zeldasLullaby.json';
 import whiterShadeOfPale from './data/songs/whiterShadeOfPale.json';
 import gymnopedie1 from './data/songs/gymnopedie1.json';
 import chromaticFantasy from './data/songs/chromaticFantasy.json';
+import prelude from './data/songs/preludeInG.json';
 
 const App = () => {
   const [songData] = useState([
@@ -116,6 +117,12 @@ const App = () => {
       artist: 'Johann Sebastian Bach',
       data: chromaticFantasy,
       img: 'https://picsum.photos/id/934/200/200',
+    },
+    {
+      title: 'Prélude',
+      artist: 'Johann Sebastian Bach',
+      data: prelude,
+      img: 'https://picsum.photos/id/936/200/200',
     },
   ]);
 
