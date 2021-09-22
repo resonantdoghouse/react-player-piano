@@ -16,6 +16,7 @@ import moonlightSonata from './data/songs/moonlightSonata.json';
 import lotrMainTheme from './data/songs/lotrMainTheme.json';
 import zeldasLullaby from './data/songs/zeldasLullaby.json';
 import whiterShadeOfPale from './data/songs/whiterShadeOfPale.json';
+import gymnopedie1 from './data/songs/gymnopedie1 .json';
 
 const App = () => {
   const [songData] = useState([
@@ -102,6 +103,12 @@ const App = () => {
       artist: 'Procol Harum',
       data: whiterShadeOfPale,
       img: 'https://picsum.photos/id/915/200/200',
+    },
+    {
+      title: 'Gymnopédie No. 1',
+      artist: 'Eric Satie',
+      data: gymnopedie1,
+      img: 'https://picsum.photos/id/932/200/200',
     },
   ]);
 

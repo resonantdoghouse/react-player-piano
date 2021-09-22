@@ -7,7 +7,7 @@ const pianoSampler = new Tone.Sampler(
   {
     A0: 'A0.[mp3|ogg]',
     C1: 'C1.[mp3|ogg]',
-    'D#1': 'Fs1.[mp3|ogg]',
+    'D#1': 'Ds1.[mp3|ogg]',
     'F#1': 'Fs1.[mp3|ogg]',
     A1: 'A1.[mp3|ogg]',
     C2: 'C2.[mp3|ogg]',

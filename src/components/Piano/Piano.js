@@ -110,6 +110,7 @@ const Piano = ({ songData }) => {
   };
 
   const handleKeyPress = (event) => {
+    console.log(event.target.dataset.note);
     if (pianoSampler.loaded) {
       pianoSampler.triggerAttackRelease([event.target.dataset.note], 0.5);
     }
