@@ -16,7 +16,8 @@ import moonlightSonata from './data/songs/moonlightSonata.json';
 import lotrMainTheme from './data/songs/lotrMainTheme.json';
 import zeldasLullaby from './data/songs/zeldasLullaby.json';
 import whiterShadeOfPale from './data/songs/whiterShadeOfPale.json';
-import gymnopedie1 from './data/songs/gymnopedie1 .json';
+import gymnopedie1 from './data/songs/gymnopedie1.json';
+import chromaticFantasy from './data/songs/chromaticFantasy.json';
 
 const App = () => {
   const [songData] = useState([
@@ -109,6 +110,12 @@ const App = () => {
       artist: 'Eric Satie',
       data: gymnopedie1,
       img: 'https://picsum.photos/id/932/200/200',
+    },
+    {
+      title: 'Chromatic Fantasy',
+      artist: 'Johann Sebastian Bach',
+      data: chromaticFantasy,
+      img: 'https://picsum.photos/id/934/200/200',
     },
   ]);
 
