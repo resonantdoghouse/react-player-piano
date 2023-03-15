@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import * as Tone from 'tone';
 import Key from './Key/';
 import pianoKeys from './pianoKeys.json';
@@ -15,17 +15,13 @@ const Piano = ({ songData }) => {
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(randomFromArray(songData));
   const [filterLevel, setFilterLevel] = useState(0);
-  // const [reverbLevel, setReverbLevel] = useState(0.5);
+  const [reverbLevel, setReverbLevel] = useState(0.5);
 
   // init fx levels, todo move this into state or useEffect
   filter.set({ wet: 0 });
   reverb.set({ wet: 0.5 });
 
-  /*
-   * Component Mount
-   * Loop to create Piano Keys
-   */
-  useEffect(() => {
+  const createMappedKeys = () => {
     const mappedKeys = pianoKeys.map((key, i) => {
       if (key.includes('#')) {
         return (
@@ -50,14 +46,25 @@ const Piano = ({ songData }) => {
         );
       }
     });
-    setKeyElements(mappedKeys);
+    return mappedKeys;
+  };
+  /*
+   * Component Mount
+   * Loop to create Piano Keys
+   */
+  useEffect(() => {
+    setKeyElements(createMappedKeys());
+    // TODO add useCallback for dep
   }, []);
 
   // useEffect(() => reverb.set({ wet: reverbLevel }), [reverbLevel]);
-  useEffect(() => filter.set({ wet: filterLevel }), [filterLevel]);
+  useEffect(() => {
+    filter.set({ wet: filterLevel });
+  }, [filterLevel]);
 
   // active song changed
   useEffect(() => {
+    console.log('active song changed');
     if (activeSong) {
       // right hand
       setMelodyPart(
@@ -110,7 +117,6 @@ const Piano = ({ songData }) => {
   };
 
   const handleKeyPress = (event) => {
-    console.log(event.target.dataset.note);
     if (pianoSampler.loaded) {
       pianoSampler.triggerAttackRelease([event.target.dataset.note], 0.5);
     }
@@ -132,21 +138,25 @@ const Piano = ({ songData }) => {
   };
 
   const handleSelectSong = (event) => {
-    const found = songData.find((song) => {
+    const newSong = songData.find((song) => {
       return song.title === event.target.value;
     });
     melodyPart.clear();
     bassPart.clear();
-    setActiveSong(found);
+    setActiveSong((prevSong) => {
+      if (prevSong !== newSong) {
+        return newSong;
+      }
+    });
   };
 
-  // const handleToggleReverb = () => {
-  //   if (reverbLevel === 0) {
-  //     setReverbLevel(0.5);
-  //   } else {
-  //     setReverbLevel(0);
-  //   }
-  // };
+  const handleToggleReverb = () => {
+    if (reverbLevel === 0) {
+      setReverbLevel(0.5);
+    } else {
+      setReverbLevel(0);
+    }
+  };
 
   const handleToggleFilter = () => {
     if (filterLevel === 0) {
@@ -190,14 +200,14 @@ const Piano = ({ songData }) => {
               )}
             </div>
             <div>
-              {/* <button
+              <button
                 onClick={handleToggleReverb}
                 className={`Piano__reverb-toggle ${
                   reverbLevel !== 0 ? 'Piano__reverb-toggle--active' : null
                 }`}
               >
                 Reverb
-              </button> */}
+              </button>
               <button
                 onClick={handleToggleFilter}
                 className={`Piano__filter-toggle ${
