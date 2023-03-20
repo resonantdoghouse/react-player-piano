@@ -21,7 +21,7 @@ const Piano = ({ songData }) => {
   filter.set({ wet: 0 });
   reverb.set({ wet: 0.5 });
 
-  const createMappedKeys = () => {
+  const createMappedKeys = useCallback(() => {
     const mappedKeys = pianoKeys.map((key, i) => {
       if (key.includes('#')) {
         return (
@@ -47,7 +47,7 @@ const Piano = ({ songData }) => {
       }
     });
     return mappedKeys;
-  };
+  }, []);
   /*
    * Component Mount
    * Loop to create Piano Keys
@@ -55,7 +55,7 @@ const Piano = ({ songData }) => {
   useEffect(() => {
     setKeyElements(createMappedKeys());
     // TODO add useCallback for dep
-  }, []);
+  }, [createMappedKeys]);
 
   // useEffect(() => reverb.set({ wet: reverbLevel }), [reverbLevel]);
   useEffect(() => {
