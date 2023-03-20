@@ -11,7 +11,7 @@ const Piano = ({ songData }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [keyElements, setKeyElements] = useState([]);
   const [activeKey, setActiveKey] = useState(null);
-  const [melodyPart, setMelodyPart] = useState();
+  const [melodyPart, setMelodyPart] = useState(null);
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(randomFromArray(songData));
   const [filterLevel, setFilterLevel] = useState(0);
@@ -48,23 +48,23 @@ const Piano = ({ songData }) => {
     });
     return mappedKeys;
   }, []);
+
   /*
    * Component Mount
    * Loop to create Piano Keys
    */
   useEffect(() => {
     setKeyElements(createMappedKeys());
-    // TODO add useCallback for dep
   }, [createMappedKeys]);
 
   // useEffect(() => reverb.set({ wet: reverbLevel }), [reverbLevel]);
+
   useEffect(() => {
     filter.set({ wet: filterLevel });
   }, [filterLevel]);
 
   // active song changed
   useEffect(() => {
-    console.log('active song changed');
     if (activeSong) {
       // right hand
       setMelodyPart(
@@ -141,8 +141,10 @@ const Piano = ({ songData }) => {
     const newSong = songData.find((song) => {
       return song.title === event.target.value;
     });
-    melodyPart.clear();
-    bassPart.clear();
+
+    melodyPart.dispose();
+    bassPart.dispose();
+
     setActiveSong((prevSong) => {
       if (prevSong !== newSong) {
         return newSong;
