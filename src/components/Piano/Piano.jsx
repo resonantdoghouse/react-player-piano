@@ -67,8 +67,8 @@ const Piano = ({ songData }) => {
   useEffect(() => {
     if (activeSong) {
       // right hand
-      setMelodyPart(
-        new Tone.Part((time, note) => {
+      setMelodyPart((prevPart) => {
+        return new Tone.Part((time, note) => {
           if (pianoSampler.loaded) {
             pianoSampler.triggerAttackRelease(
               note.name,
@@ -78,8 +78,8 @@ const Piano = ({ songData }) => {
             );
           }
           animateKey(note, 'rh');
-        }, activeSong.data.tracks[0].notes).start()
-      );
+        }, activeSong.data.tracks[0].notes).start();
+      });
       // left hand
       setBassPart(
         new Tone.Part((time, note) => {
