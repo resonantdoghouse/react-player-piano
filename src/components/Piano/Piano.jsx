@@ -67,33 +67,38 @@ const Piano = ({ songData }) => {
   useEffect(() => {
     if (activeSong) {
       // right hand
-      setMelodyPart((prevPart) => {
-        return new Tone.Part((time, note) => {
-          if (pianoSampler.loaded) {
-            pianoSampler.triggerAttackRelease(
-              note.name,
-              note.duration,
-              time,
-              note.velocity
-            );
-          }
-          animateKey(note, 'rh');
-        }, activeSong.data.tracks[0].notes).start();
-      });
+      const newMelodyPart = new Tone.Part((time, note) => {
+        if (pianoSampler.loaded) {
+          pianoSampler.triggerAttackRelease(
+            note.name,
+            note.duration,
+            time,
+            note.velocity
+          );
+        }
+        animateKey(note, 'rh');
+      }, activeSong.data.tracks[0].notes).start();
+
       // left hand
-      setBassPart(
-        new Tone.Part((time, note) => {
-          if (pianoSampler.loaded) {
-            pianoSampler.triggerAttackRelease(
-              note.name,
-              note.duration,
-              time,
-              note.velocity
-            );
-          }
-          animateKey(note, 'lh');
-        }, activeSong.data.tracks[1].notes).start()
-      );
+      const newBassPart = new Tone.Part((time, note) => {
+        if (pianoSampler.loaded) {
+          pianoSampler.triggerAttackRelease(
+            note.name,
+            note.duration,
+            time,
+            note.velocity
+          );
+        }
+        animateKey(note, 'lh');
+      }, activeSong.data.tracks[1].notes).start();
+
+      setMelodyPart(newMelodyPart);
+      setBassPart(newBassPart);
+
+      return () => {
+        newMelodyPart.dispose();
+        newBassPart.dispose();
+      };
     }
   }, [activeSong]);
 
@@ -117,10 +122,13 @@ const Piano = ({ songData }) => {
   };
 
   const handleKeyPress = (event) => {
+    const {
+      dataset: { note },
+    } = event.target;
     if (pianoSampler.loaded) {
-      pianoSampler.triggerAttackRelease([event.target.dataset.note], 0.5);
+      pianoSampler.triggerAttackRelease([note], 0.5);
     }
-    setActiveKey(event.target.dataset.note);
+    setActiveKey(note);
   };
 
   // Toggle play pause
