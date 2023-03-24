@@ -19,9 +19,9 @@ const Piano = ({ songData }) => {
 
   // init fx levels, todo move this into state or useEffect
   filter.set({ wet: 0 });
-  reverb.set({ wet: 0.5 });
+  reverb.set({ wet: 0.6 });
 
-  const createMappedKeys = useCallback(() => {
+  const createPianoKeys = useCallback(() => {
     const mappedKeys = pianoKeys.map((key, i) => {
       if (key.includes('#')) {
         return (
@@ -54,8 +54,8 @@ const Piano = ({ songData }) => {
    * Loop to create Piano Keys
    */
   useEffect(() => {
-    setKeyElements(createMappedKeys());
-  }, [createMappedKeys]);
+    setKeyElements(createPianoKeys());
+  }, [createPianoKeys]);
 
   // useEffect(() => reverb.set({ wet: reverbLevel }), [reverbLevel]);
 
@@ -109,11 +109,9 @@ const Piano = ({ songData }) => {
       (element) => element.getAttribute('data-note') === note.name
     );
     if (keyElement) {
-      if (hand === 'rh') {
-        keyElement.classList.add('Key--rh-active');
-      } else if (hand === 'lh') {
-        keyElement.classList.add('Key--lh-active');
-      }
+      keyElement.classList.add(
+        hand === 'rh' ? 'Key--rh-active' : 'Key--lh-active'
+      );
       setTimeout(() => {
         keyElement.classList.remove('Key--lh-active');
         keyElement.classList.remove('Key--rh-active');
@@ -146,18 +144,13 @@ const Piano = ({ songData }) => {
   };
 
   const handleSelectSong = (event) => {
-    const newSong = songData.find((song) => {
-      return song.title === event.target.value;
-    });
+    const { value } = event.target;
+    const newSong = songData.find((song) => song.title === value);
 
-    melodyPart.dispose();
-    bassPart.dispose();
+    if (melodyPart) melodyPart.dispose();
+    if (bassPart) bassPart.dispose();
 
-    setActiveSong((prevSong) => {
-      if (prevSong !== newSong) {
-        return newSong;
-      }
-    });
+    setActiveSong((prevSong) => (prevSong !== newSong ? newSong : prevSong));
   };
 
   const handleToggleReverb = () => {
@@ -174,6 +167,12 @@ const Piano = ({ songData }) => {
     } else {
       setFilterLevel(0);
     }
+  };
+
+  const renderSongOptions = () => {
+    return songData
+      .sort((a, b) => (a.title > b.title ? 1 : -1))
+      .map((song) => <option key={song.title}>{song.title}</option>);
   };
 
   // song data json files are quite large!
@@ -201,11 +200,7 @@ const Piano = ({ songData }) => {
                   defaultValue={activeSong.title}
                   className="Piano__song-select"
                 >
-                  {[...songData]
-                    .sort((a, b) => (a.title > b.title ? 1 : -1))
-                    .map((song) => (
-                      <option key={song.title}>{song.title}</option>
-                    ))}
+                  {renderSongOptions()}
                 </select>
               )}
             </div>
