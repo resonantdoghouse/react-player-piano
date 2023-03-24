@@ -116,7 +116,7 @@ const App = () => {
       title: 'Chromatic Fantasy',
       artist: 'Johann Sebastian Bach',
       data: chromaticFantasy,
-      img: 'https://picsum.photos/id/934/200/200',
+      img: 'https://picsum.photos/id/936/200/200',
     },
     {
       title: 'Prélude',
