@@ -94,6 +94,7 @@ const Piano = ({ songData }) => {
 
   // Key Animation
   const animateKey = (note, hand) => {
+ 
     const keysArray = Array.from(pianoKeysRef.current.children);
     const keyElement = keysArray.find(
       (element) => element.getAttribute("data-note") === note.name
@@ -105,7 +106,7 @@ const Piano = ({ songData }) => {
       setTimeout(() => {
         keyElement.classList.remove("Key--lh-active");
         keyElement.classList.remove("Key--rh-active");
-      }, note.duration * 1000);
+      }, note.duration * 600);
     }
   };
 
