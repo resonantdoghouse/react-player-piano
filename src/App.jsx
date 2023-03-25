@@ -26,6 +26,9 @@ import bachImage from './assets/images/Johann_Sebastian_Bach.jpg'
 import zeldaImage from './assets/images/zelda-lullaby.jpg'
 import procolHarumImage from './assets/images/ProcolHarum.jpg'
 import aphexTwinImage from './assets/images/AphexTwinlogo.jpg'
+import beethovenImage from './assets/images/Beethoven.jpg'
+import ericsatieImage from './assets/images/Ericsatie.jpg'
+import pachelbeJohannImage from './assets/images/pachelbel_johann.jpg'
 
 const App = () => {
   const [songData] = useState([
@@ -45,7 +48,7 @@ const App = () => {
       title: 'Canon',
       artist: 'Johann Pachelbel',
       data: canon,
-      img: 'https://picsum.photos/id/903/200/200',
+      img: pachelbeJohannImage,
     },
     {
       title: 'Jynweythek Ylow',
@@ -93,7 +96,7 @@ const App = () => {
       title: 'Moonlight Sonata',
       artist: 'Ludwig Van Beethoven',
       data: moonlightSonata,
-      img: 'https://picsum.photos/id/912/200/200',
+      img: beethovenImage,
     },
     {
       title: 'Lord Of The Rings - Medley',
@@ -117,7 +120,7 @@ const App = () => {
       title: 'Gymnopédie No. 1',
       artist: 'Eric Satie',
       data: gymnopedie1,
-      img: 'https://picsum.photos/id/932/200/200',
+      img: ericsatieImage,
     },
     {
       title: 'Chromatic Fantasy',
