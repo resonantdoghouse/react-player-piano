@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import * as Tone from 'tone';
-import Key from './Key/';
-import pianoKeys from './pianoKeys.json';
-import pianoSampler, { filter, reverb } from './pianoSampler';
-import { randomFromArray } from '../../lib/utils';
-import './Piano.scss';
+import { useState, useEffect, useRef, useCallback } from "react";
+import * as Tone from "tone";
+import Key from "../Key/";
+import pianoKeys from "./pianoKeys.json";
+import pianoSampler, { filter, reverb } from "./pianoSampler";
+import { randomFromArray } from "../../lib/utils";
+import "./Piano.scss";
 
 const Piano = ({ songData }) => {
   const pianoKeysRef = useRef(null);
@@ -15,15 +15,11 @@ const Piano = ({ songData }) => {
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(randomFromArray(songData));
   const [filterLevel, setFilterLevel] = useState(0);
-  const [reverbLevel, setReverbLevel] = useState(0.5);
-
-  // init fx levels, todo move this into state or useEffect
-  filter.set({ wet: 0 });
-  reverb.set({ wet: 0.6 });
+  const [reverbLevel, setReverbLevel] = useState(0.65);
 
   const createPianoKeys = useCallback(() => {
     const mappedKeys = pianoKeys.map((key, i) => {
-      if (key.includes('#')) {
+      if (key.includes("#")) {
         return (
           <Key
             key={i}
@@ -49,15 +45,17 @@ const Piano = ({ songData }) => {
     return mappedKeys;
   }, []);
 
-  /*
-   * Component Mount
-   * Loop to create Piano Keys
-   */
+  useEffect(() => {
+    filter.set({ wet: filterLevel });
+  }, [filterLevel]);
+
+  useEffect(() => {
+    reverb.set({ wet: reverbLevel });
+  }, [reverbLevel]);
+
   useEffect(() => {
     setKeyElements(createPianoKeys());
   }, [createPianoKeys]);
-
-  // useEffect(() => reverb.set({ wet: reverbLevel }), [reverbLevel]);
 
   useEffect(() => {
     filter.set({ wet: filterLevel });
@@ -76,9 +74,8 @@ const Piano = ({ songData }) => {
             note.velocity
           );
         }
-        animateKey(note, 'rh');
+        animateKey(note, "rh");
       }, activeSong.data.tracks[0].notes).start();
-
       // left hand
       const newBassPart = new Tone.Part((time, note) => {
         if (pianoSampler.loaded) {
@@ -89,12 +86,10 @@ const Piano = ({ songData }) => {
             note.velocity
           );
         }
-        animateKey(note, 'lh');
+        animateKey(note, "lh");
       }, activeSong.data.tracks[1].notes).start();
-
       setMelodyPart(newMelodyPart);
       setBassPart(newBassPart);
-
       return () => {
         newMelodyPart.dispose();
         newBassPart.dispose();
@@ -106,26 +101,25 @@ const Piano = ({ songData }) => {
   const animateKey = (note, hand) => {
     const keysArray = Array.from(pianoKeysRef.current.children);
     const keyElement = keysArray.find(
-      (element) => element.getAttribute('data-note') === note.name
+      (element) => element.getAttribute("data-note") === note.name
     );
     if (keyElement) {
       keyElement.classList.add(
-        hand === 'rh' ? 'Key--rh-active' : 'Key--lh-active'
+        hand === "rh" ? "Key--rh-active" : "Key--lh-active"
       );
       setTimeout(() => {
-        keyElement.classList.remove('Key--lh-active');
-        keyElement.classList.remove('Key--rh-active');
+        keyElement.classList.remove("Key--lh-active");
+        keyElement.classList.remove("Key--rh-active");
       }, note.duration * 1000);
     }
   };
 
-  const handleKeyPress = (event) => {
-    const {
+  const handleKeyPress = ({
+    target: {
       dataset: { note },
-    } = event.target;
-    if (pianoSampler.loaded) {
-      pianoSampler.triggerAttackRelease([note], 0.5);
-    }
+    },
+  }) => {
+    if (pianoSampler.loaded) pianoSampler.triggerAttackRelease([note], 0.5);
     setActiveKey(note);
   };
 
@@ -138,7 +132,7 @@ const Piano = ({ songData }) => {
       Tone.Transport.stop();
       setIsPlaying(false);
     }
-    if (Tone.context.state !== 'running') {
+    if (Tone.context.state !== "running") {
       Tone.context.resume();
     }
   };
@@ -146,16 +140,14 @@ const Piano = ({ songData }) => {
   const handleSelectSong = (event) => {
     const { value } = event.target;
     const newSong = songData.find((song) => song.title === value);
-
     if (melodyPart) melodyPart.dispose();
     if (bassPart) bassPart.dispose();
-
     setActiveSong((prevSong) => (prevSong !== newSong ? newSong : prevSong));
   };
 
   const handleToggleReverb = () => {
     if (reverbLevel === 0) {
-      setReverbLevel(0.5);
+      setReverbLevel(0.65);
     } else {
       setReverbLevel(0);
     }
@@ -169,11 +161,10 @@ const Piano = ({ songData }) => {
     }
   };
 
-  const renderSongOptions = () => {
-    return songData
+  const renderSongOptions = () =>
+    songData
       .sort((a, b) => (a.title > b.title ? 1 : -1))
       .map((song) => <option key={song.title}>{song.title}</option>);
-  };
 
   // song data json files are quite large!
   if (!songData) {
@@ -192,7 +183,7 @@ const Piano = ({ songData }) => {
           <nav className="controls__nav">
             <div>
               <button onClick={handlePlaySong} className="Piano__play-toggle">
-                {!isPlaying ? 'play' : 'pause'}
+                {!isPlaying ? "play" : "pause"}
               </button>
               {activeSong && (
                 <select
@@ -208,7 +199,7 @@ const Piano = ({ songData }) => {
               <button
                 onClick={handleToggleReverb}
                 className={`Piano__reverb-toggle ${
-                  reverbLevel !== 0 ? 'Piano__reverb-toggle--active' : null
+                  reverbLevel !== 0 ? "Piano__reverb-toggle--active" : null
                 }`}
               >
                 Reverb
@@ -216,7 +207,7 @@ const Piano = ({ songData }) => {
               <button
                 onClick={handleToggleFilter}
                 className={`Piano__filter-toggle ${
-                  filterLevel !== 0 ? 'Piano__filter-toggle--active' : null
+                  filterLevel !== 0 ? "Piano__filter-toggle--active" : null
                 }`}
               >
                 Filter Effect
@@ -244,7 +235,7 @@ const Piano = ({ songData }) => {
                 {activeSong.data.header.tempos &&
                 activeSong.data.header.tempos.length === 1 ? (
                   <p className="activeSong__bpm">
-                    BPM{' '}
+                    BPM{" "}
                     {activeSong.data.header.tempos.map((tempo, i) => {
                       return <span key={i}>{tempo.bpm.toFixed(2)}</span>;
                     })}
