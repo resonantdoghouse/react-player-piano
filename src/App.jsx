@@ -20,11 +20,12 @@ import gymnopedie1 from './data/songs/gymnopedie1.json'
 import chromaticFantasy from './data/songs/chromaticFantasy.json'
 import prelude from './data/songs/preludeInG.json'
 
+// images, album covers etc...
 import jurassicParkImage from './assets/images/jurassic-park.jpg'
 import bachImage from './assets/images/Johann_Sebastian_Bach.jpg'
 import zeldaImage from './assets/images/zelda-lullaby.jpg'
-
 import procolHarumImage from './assets/images/ProcolHarum.jpg'
+import aphexTwinImage from './assets/images/AphexTwinlogo.jpg'
 
 const App = () => {
   const [songData] = useState([
@@ -32,13 +33,13 @@ const App = () => {
       title: 'Avril 14',
       artist: 'Aphex Twin',
       data: avril14,
-      img: 'https://picsum.photos/id/910/200/200',
+      img: aphexTwinImage,
     },
     {
       title: 'Aisatsana',
       artist: 'Aphex Twin',
       data: aisatsana,
-      img: 'https://picsum.photos/id/902/200/200',
+      img: aphexTwinImage,
     },
     {
       title: 'Canon',
@@ -50,7 +51,7 @@ const App = () => {
       title: 'Jynweythek Ylow',
       artist: 'Aphex Twin',
       data: jynweythekYlow,
-      img: 'https://picsum.photos/id/904/200/200',
+      img: aphexTwinImage,
     },
     {
       title: 'Tommib',
@@ -122,13 +123,13 @@ const App = () => {
       title: 'Chromatic Fantasy',
       artist: 'Johann Sebastian Bach',
       data: chromaticFantasy,
-      img: 'https://picsum.photos/id/936/200/200',
+      img: bachImage,
     },
     {
       title: 'Prélude',
       artist: 'Johann Sebastian Bach',
       data: prelude,
-      img: 'https://picsum.photos/id/936/200/200',
+      img: bachImage,
     },
   ])
 
