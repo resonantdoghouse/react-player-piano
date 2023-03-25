@@ -20,6 +20,9 @@ import gymnopedie1 from './data/songs/gymnopedie1.json';
 import chromaticFantasy from './data/songs/chromaticFantasy.json';
 import prelude from './data/songs/preludeInG.json';
 
+import jurassicParkImage from './assets/images/jurassic-park.jpg'
+import bachImage from './assets/images/Johann_Sebastian_Bach.jpg'
+
 const App = () => {
   const [songData] = useState([
     {
@@ -62,7 +65,7 @@ const App = () => {
       title: 'Jurassic Park',
       artist: 'John Williams',
       data: jurassicPark,
-      img: 'https://picsum.photos/id/906/200/200',
+      img: jurassicParkImage,
     },
     {
       title: 'The Entertainer',
@@ -74,7 +77,7 @@ const App = () => {
       title: 'Air on the G String',
       artist: 'Johann Sebastian Bach',
       data: airOnTheGString,
-      img: 'https://picsum.photos/id/908/200/200',
+      img: bachImage,
     },
     {
       title: 'Nocturne Op.9 No.2',
