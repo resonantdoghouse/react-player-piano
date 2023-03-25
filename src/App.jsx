@@ -1,27 +1,30 @@
-import { useState } from 'react';
-import Piano from './components/Piano';
-import './App.scss';
+import { useState } from 'react'
+import Piano from './components/Piano'
+import './App.scss'
 // song data
-import avril14 from './data/songs/avril14.json';
-import aisatsana from './data/songs/aisatsana.json';
-import canon from './data/songs/canon.json';
-import jynweythekYlow from './data/songs/jynweythekYlow.json';
-import tommib from './data/songs/tommib.json';
-import superMario from './data/songs/superMario.json';
-import jurassicPark from './data/songs/jurassicPark.json';
-import theEntertainer from './data/songs/entertainer.json';
-import airOnTheGString from './data/songs/airOnTheGString.json';
-import chopinNocturnOpN2 from './data/songs/chopinNocturneOp9N2.json';
-import moonlightSonata from './data/songs/moonlightSonata.json';
-import lotrMainTheme from './data/songs/lotrMainTheme.json';
-import zeldasLullaby from './data/songs/zeldasLullaby.json';
-import whiterShadeOfPale from './data/songs/whiterShadeOfPale.json';
-import gymnopedie1 from './data/songs/gymnopedie1.json';
-import chromaticFantasy from './data/songs/chromaticFantasy.json';
-import prelude from './data/songs/preludeInG.json';
+import avril14 from './data/songs/avril14.json'
+import aisatsana from './data/songs/aisatsana.json'
+import canon from './data/songs/canon.json'
+import jynweythekYlow from './data/songs/jynweythekYlow.json'
+import tommib from './data/songs/tommib.json'
+import superMario from './data/songs/superMario.json'
+import jurassicPark from './data/songs/jurassicPark.json'
+import theEntertainer from './data/songs/entertainer.json'
+import airOnTheGString from './data/songs/airOnTheGString.json'
+import chopinNocturnOpN2 from './data/songs/chopinNocturneOp9N2.json'
+import moonlightSonata from './data/songs/moonlightSonata.json'
+import lotrMainTheme from './data/songs/lotrMainTheme.json'
+import zeldasLullaby from './data/songs/zeldasLullaby.json'
+import whiterShadeOfPale from './data/songs/whiterShadeOfPale.json'
+import gymnopedie1 from './data/songs/gymnopedie1.json'
+import chromaticFantasy from './data/songs/chromaticFantasy.json'
+import prelude from './data/songs/preludeInG.json'
 
 import jurassicParkImage from './assets/images/jurassic-park.jpg'
 import bachImage from './assets/images/Johann_Sebastian_Bach.jpg'
+import zeldaImage from './assets/images/zelda-lullaby.jpg'
+
+import procolHarumImage from './assets/images/ProcolHarum.jpg'
 
 const App = () => {
   const [songData] = useState([
@@ -101,13 +104,13 @@ const App = () => {
       title: "Zelda's Lullaby",
       artist: 'Koji Kondo',
       data: zeldasLullaby,
-      img: 'https://picsum.photos/id/914/200/200',
+      img: zeldaImage,
     },
     {
       title: 'A Whiter Shade Of Pale',
       artist: 'Procol Harum',
       data: whiterShadeOfPale,
-      img: 'https://picsum.photos/id/915/200/200',
+      img: procolHarumImage,
     },
     {
       title: 'Gymnopédie No. 1',
@@ -127,13 +130,13 @@ const App = () => {
       data: prelude,
       img: 'https://picsum.photos/id/936/200/200',
     },
-  ]);
+  ])
 
   return (
     <div className="App">
       <Piano songData={songData} />
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
