@@ -112,6 +112,7 @@ const Piano = ({ songData }) => {
       keyElement.classList.add(
         hand === 'rh' ? 'Key--rh-active' : 'Key--lh-active'
       );
+
       setTimeout(() => {
         keyElement.classList.remove('Key--lh-active');
         keyElement.classList.remove('Key--rh-active');
