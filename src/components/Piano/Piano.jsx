@@ -10,7 +10,6 @@ const Piano = ({ songData }) => {
   const pianoKeysRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [keyElements, setKeyElements] = useState([]);
-  const [activeKey, setActiveKey] = useState(null);
   const [melodyPart, setMelodyPart] = useState(null);
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(randomFromArray(songData));
@@ -56,10 +55,6 @@ const Piano = ({ songData }) => {
   useEffect(() => {
     setKeyElements(createPianoKeys());
   }, [createPianoKeys]);
-
-  useEffect(() => {
-    filter.set({ wet: filterLevel });
-  }, [filterLevel]);
 
   // active song changed
   useEffect(() => {
@@ -120,7 +115,7 @@ const Piano = ({ songData }) => {
     },
   }) => {
     if (pianoSampler.loaded) pianoSampler.triggerAttackRelease([note], 0.5);
-    setActiveKey(note);
+    // setActiveKey(note);
   };
 
   // Toggle play pause
@@ -176,10 +171,6 @@ const Piano = ({ songData }) => {
       <h1 className="hidden">React Player Piano</h1>
       <div className="Piano">
         <section className="Piano__controls controls">
-          {/*
-           * Controls
-           * Play/Pause, Song Select, FX Toggle
-           */}
           <nav className="controls__nav">
             <div>
               <button onClick={handlePlaySong} className="Piano__play-toggle">
@@ -216,17 +207,9 @@ const Piano = ({ songData }) => {
           </nav>
           {activeSong ? (
             <article className="Piano__activeSong activeSong">
-              {/*
-               * Controls
-               * Play/Pause, Song Select, FX Toggle
-               */}
               <header>
                 <h2 className="activeSong__title">{activeSong.title}</h2>
                 <p className="activeSong__artist">{activeSong.artist}</p>
-                {/*
-                 * BPM & BPM list
-                 * If more than 1 Tempo is set the list is rendered
-                 */}
                 {activeSong.data.header.bpm && (
                   <p className="activeSong__bpm">
                     BPM {activeSong.data.header.bpm}
@@ -266,15 +249,10 @@ const Piano = ({ songData }) => {
             </article>
           ) : null}
         </section>
-        {/*
-         * Piano Keys 🎹
-         */}
         <div className="Piano__keys" ref={pianoKeysRef}>
           {keyElements}
         </div>
       </div>
-      {/* Fixes compilation error, no unused vars, going to use this later! */}
-      <div className="hidden">{activeKey}</div>
     </main>
   );
 };
