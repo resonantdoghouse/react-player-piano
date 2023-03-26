@@ -26,6 +26,7 @@ import aphexTwinImage from '../assets/images/AphexTwinlogo.jpg'
 import beethovenImage from '../assets/images/Beethoven.jpg'
 import ericsatieImage from '../assets/images/Ericsatie.jpg'
 import pachelbeJohannImage from '../assets/images/pachelbel_johann.jpg'
+import lotrJohannImage from '../assets/images/lotr.jpg'
 
 const songData = [
   {
@@ -98,7 +99,7 @@ const songData = [
     title: 'Lord Of The Rings - Medley',
     artist: 'Howard Shore, arranged by Alex Lag',
     data: lotrMainTheme,
-    img: 'https://picsum.photos/id/913/200/200',
+    img: lotrJohannImage,
   },
   {
     title: "Zelda's Lullaby",

@@ -1,0 +1,88 @@
+@use '../../styles/partials/variables';
+
+.controls {
+  background: lighten(variables.$color-black, 10%);
+  border-radius: 10px;
+  color: variables.$color-white;
+  border: 1px solid darken(variables.$color-white, 50%);
+  padding: 0.375rem 2rem;
+  margin: 0 0 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
+  &__nav {
+    display: flex;
+    flex-wrap: wrap;
+    width: 75%;
+  }
+  &__toggle-btn {
+    border-radius: 3px;
+    margin: 3px;
+    padding: 0.625rem;
+    border: 0;
+    background: white;
+    border: 1px solid white;
+    &:hover {
+      background: rgb(212, 243, 255);
+    }
+    &:focus {
+      background: skyblue;
+      border-color: white;
+    }
+    &:active,
+    &--active {
+      background: skyblue;
+      border-color: skyblue;
+    }
+    &::selection {
+      background: transparent;
+    }
+  }
+}
+
+.activeSong {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-items: center;
+  width: 25%;
+  color: #fff;
+  &__header {
+    background: #292929;
+    padding: 0.625rem;
+  }
+  &__title {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    font-weight: normal;
+  }
+  &__artist {
+    margin: 0;
+    font-size: 0.875rem;
+  }
+  &__img {
+    width: 150px;
+    height: 150px;
+    margin: 0 10px 10px;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: top center;
+  }
+  &__bpm {
+    margin: 0.625rem;
+    font-size: 0.875rem;
+  }
+}
+
+.bpmList {
+  overflow-y: scroll;
+  max-height: 50px;
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  &__item {
+    border-bottom: 1px solid black;
+  }
+}
