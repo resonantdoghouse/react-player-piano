@@ -15,21 +15,20 @@
   &__nav {
     display: flex;
     flex-wrap: wrap;
-    width: 75%;
   }
   &__toggle-btn {
     border-radius: 3px;
     margin: 3px;
     padding: 0.625rem;
     border: 0;
-    background: white;
-    border: 1px solid white;
+    background: variables.$color-white;
+    border: 1px solid variables.$color-white;
     &:hover {
       background: rgb(212, 243, 255);
     }
     &:focus {
       background: skyblue;
-      border-color: white;
+      border-color: variables.$color-white;
     }
     &:active,
     &--active {
@@ -44,10 +43,10 @@
 
 .activeSong {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
   align-items: center;
-  width: 25%;
   color: #fff;
   &__header {
     background: #292929;
@@ -63,25 +62,31 @@
     font-size: 0.875rem;
   }
   &__img {
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: 100%;
+    max-width: 150px;
+    max-height: 150px;
     margin: 0 10px 10px;
     border-radius: 10px;
     object-fit: cover;
     object-position: top center;
   }
   &__bpm {
+    width: 100%;
     margin: 0.625rem;
     font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 .bpmList {
   overflow-y: scroll;
-  max-height: 50px;
   list-style: none;
   margin: 0;
-  padding: 10px;
+  padding: 0.625rem 1.25rem;
+  max-height: 132px;
   &__item {
     border-bottom: 1px solid black;
   }

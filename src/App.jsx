@@ -2,12 +2,10 @@ import Piano from './components/Piano'
 import songData from './data/songData'
 import './App.scss'
 
-const App = () => {
-  return (
-    <div className="App">
-      <Piano songData={songData} />
-    </div>
-  )
-}
+const App = () => (
+  <div className="App">
+    <Piano songData={songData} />
+  </div>
+)
 
 export default App

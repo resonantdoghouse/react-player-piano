@@ -13,10 +13,31 @@ const Piano = ({ songData }) => {
   const [keyElements, setKeyElements] = useState([])
   const [melodyPart, setMelodyPart] = useState(null)
   const [bassPart, setBassPart] = useState()
-  const [activeSong, setActiveSong] = useState(randomFromArray(songData))
+  const [activeSong, setActiveSong] = useState(null)
   const [filterLevel, setFilterLevel] = useState(0)
   const [reverbLevel, setReverbLevel] = useState(0.65)
   const [playbackSpeed, setPlaybackSpeed] = useState(120)
+  const [keysArray, setKeysArray] = useState([])
+  // const [loaded, setLoaded] = useState(false)
+
+  // Key Animation
+  const animateKey = useCallback(
+    (note, hand) => {
+      const keyElement = keysArray.find(
+        (element) => element.getAttribute('data-note') === note.name
+      )
+      if (keyElement) {
+        keyElement.classList.add(
+          hand === 'rh' ? 'Key--rh-active' : 'Key--lh-active'
+        )
+        setTimeout(() => {
+          keyElement.classList.remove('Key--lh-active')
+          keyElement.classList.remove('Key--rh-active')
+        }, note.duration * 600)
+      }
+    },
+    [keysArray]
+  )
 
   const createPianoKeys = useCallback(() => {
     const mappedKeys = pianoKeys.map((key, i) => {
@@ -45,6 +66,15 @@ const Piano = ({ songData }) => {
     })
     return mappedKeys
   }, [])
+
+  useEffect(() => {
+    setKeysArray(() => {
+      return Array.from(pianoKeysRef.current.children)
+    })
+    if (pianoKeysRef.current && !activeSong) {
+      setActiveSong(randomFromArray(songData))
+    }
+  }, [pianoKeysRef, songData, activeSong])
 
   useEffect(() => {
     filter.set({ wet: filterLevel })
@@ -92,28 +122,11 @@ const Piano = ({ songData }) => {
         newBassPart.dispose()
       }
     }
-  }, [activeSong, playbackSpeed])
+  }, [activeSong, animateKey])
 
   useEffect(() => {
     Tone.Transport.bpm.rampTo(playbackSpeed, 2)
   }, [playbackSpeed])
-
-  // Key Animation
-  const animateKey = (note, hand) => {
-    const keysArray = Array.from(pianoKeysRef.current.children)
-    const keyElement = keysArray.find(
-      (element) => element.getAttribute('data-note') === note.name
-    )
-    if (keyElement) {
-      keyElement.classList.add(
-        hand === 'rh' ? 'Key--rh-active' : 'Key--lh-active'
-      )
-      setTimeout(() => {
-        keyElement.classList.remove('Key--lh-active')
-        keyElement.classList.remove('Key--rh-active')
-      }, note.duration * 600)
-    }
-  }
 
   const handleKeyPress = ({
     target: {
