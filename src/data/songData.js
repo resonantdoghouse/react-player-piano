@@ -16,6 +16,7 @@ import whiterShadeOfPale from '../data/songs/whiterShadeOfPale.json'
 import gymnopedie1 from '../data/songs/gymnopedie1.json'
 import chromaticFantasy from '../data/songs/chromaticFantasy.json'
 import prelude from '../data/songs/preludeInG.json'
+import minuetInG from '../data/songs/minuetInG.json'
 
 // images, album covers etc...
 import jurassicParkImage from '../assets/images/jurassic-park.jpg'
@@ -33,6 +34,12 @@ import squarepusherImage from '../assets/images/squarepusher.jpg'
 import chopinImage from '../assets/images/chopin.jpg'
 
 const songData = [
+  {
+    title: 'Minuet In G',
+    artist: 'Johann Sebastian Bach',
+    data: minuetInG,
+    img: bachImage,
+  },
   {
     title: 'Avril 14',
     artist: 'Aphex Twin',
