@@ -142,11 +142,11 @@ const Piano = ({ songData }) => {
 
   const handlePlaySong = () => {
     if (!isPlaying) {
-      Tone.Transport.start()
       setIsPlaying(true)
+      Tone.Transport.start()
     } else {
-      Tone.Transport.stop()
       setIsPlaying(false)
+      Tone.Transport.pause()
     }
     if (Tone.context.state !== 'running') {
       Tone.context.resume()
@@ -182,7 +182,6 @@ const Piano = ({ songData }) => {
       .sort((a, b) => (a.title > b.title ? 1 : -1))
       .map((song) => <option key={song.title}>{song.title}</option>)
 
-  // song data json files are quite large!
   if (!songData) {
     return <p>Loading song data...</p>
   }

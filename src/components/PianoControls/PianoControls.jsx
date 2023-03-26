@@ -24,13 +24,15 @@ const PianoControls = ({
             {!isPlaying ? 'play' : 'pause'}
           </button>
           {activeSong && (
-            <select
-              onChange={handleSelectSong}
-              defaultValue={activeSong.title}
-              className="Piano__song-select"
-            >
-              {renderSongOptions()}
-            </select>
+            <>
+              <select
+                onChange={handleSelectSong}
+                defaultValue={activeSong.title}
+                className="Piano__song-select"
+              >
+                {renderSongOptions()}
+              </select>
+            </>
           )}
         </div>
         <div>
@@ -52,7 +54,7 @@ const PianoControls = ({
                 : null
             }`}
           >
-            Filter Effect
+            Filter
           </button>
           <label>
             Playback Speed
@@ -64,6 +66,7 @@ const PianoControls = ({
               value={playbackSpeed}
               step="1"
             />
+            {playbackSpeed} BPM
           </label>
         </div>
       </nav>
