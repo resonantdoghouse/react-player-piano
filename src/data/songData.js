@@ -27,6 +27,10 @@ import beethovenImage from '../assets/images/Beethoven.jpg'
 import ericsatieImage from '../assets/images/Ericsatie.jpg'
 import pachelbeJohannImage from '../assets/images/pachelbel_johann.jpg'
 import lotrJohannImage from '../assets/images/lotr.jpg'
+import scottJoplinImage from '../assets/images/Scott-Joplin.jpg'
+import superMarioImage from '../assets/images/super-mario.jpg'
+import squarepusherImage from '../assets/images/squarepusher.jpg'
+import chopinImage from '../assets/images/chopin.jpg'
 
 const songData = [
   {
@@ -57,13 +61,13 @@ const songData = [
     title: 'Tommib',
     artist: 'Squarepusher',
     data: tommib,
-    img: 'https://picsum.photos/id/904/200/200',
+    img: squarepusherImage,
   },
   {
     title: 'Super Mario Bros',
     artist: 'Koji Kondo',
     data: superMario,
-    img: 'https://picsum.photos/id/905/200/200',
+    img: superMarioImage,
   },
   {
     title: 'Jurassic Park',
@@ -75,7 +79,7 @@ const songData = [
     title: 'The Entertainer',
     artist: 'Scott Joplin',
     data: theEntertainer,
-    img: 'https://picsum.photos/id/907/200/200',
+    img: scottJoplinImage,
   },
   {
     title: 'Air on the G String',
@@ -87,7 +91,7 @@ const songData = [
     title: 'Nocturne Op.9 No.2',
     artist: 'Chopin',
     data: chopinNocturnOpN2,
-    img: 'https://picsum.photos/id/908/200/200',
+    img: chopinImage,
   },
   {
     title: 'Moonlight Sonata',

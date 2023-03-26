@@ -18,11 +18,10 @@ const Piano = ({ songData }) => {
   const [reverbLevel, setReverbLevel] = useState(0.65)
   const [playbackSpeed, setPlaybackSpeed] = useState(120)
   const [keysArray, setKeysArray] = useState([])
-  // const [loaded, setLoaded] = useState(false)
 
-  // Key Animation
   const animateKey = useCallback(
     (note, hand) => {
+      console.log('animatekeys')
       const keyElement = keysArray.find(
         (element) => element.getAttribute('data-note') === note.name
       )
@@ -69,13 +68,15 @@ const Piano = ({ songData }) => {
 
   useEffect(() => {
     if (activeSong) {
-      console.log(Math.round(activeSong.data.header.tempos[0].bpm))
-      setPlaybackSpeed(Math.round(activeSong.data.header.tempos[0].bpm))
+      if (activeSong.data.header.tempos) {
+        setPlaybackSpeed(Math.round(activeSong.data.header.tempos[0].bpm))
+      } else {
+        setPlaybackSpeed(activeSong.data.header.bpm)
+      }
     }
     if (activeSong && !keysArray.length) {
       setKeysArray(() => Array.from(pianoKeysRef.current.children))
     }
-
     if (pianoKeysRef.current && !activeSong) {
       setActiveSong(randomFromArray(songData))
     }
@@ -93,22 +94,8 @@ const Piano = ({ songData }) => {
     setKeyElements(createPianoKeys())
   }, [createPianoKeys])
 
-  // active song changed
   useEffect(() => {
     if (activeSong) {
-      // right hand
-      const newMelodyPart = new Tone.Part((time, note) => {
-        if (pianoSampler.loaded) {
-          pianoSampler.triggerAttackRelease(
-            note.name,
-            note.duration,
-            time,
-            note.velocity
-          )
-        }
-        animateKey(note, 'rh')
-      }, activeSong.data.tracks[0].notes).start()
-      // left hand
       const newBassPart = new Tone.Part((time, note) => {
         if (pianoSampler.loaded) {
           pianoSampler.triggerAttackRelease(
@@ -120,8 +107,21 @@ const Piano = ({ songData }) => {
         }
         animateKey(note, 'lh')
       }, activeSong.data.tracks[1].notes).start()
-      setMelodyPart(newMelodyPart)
+
+      const newMelodyPart = new Tone.Part((time, note) => {
+        if (pianoSampler.loaded) {
+          pianoSampler.triggerAttackRelease(
+            note.name,
+            note.duration,
+            time,
+            note.velocity
+          )
+        }
+        animateKey(note, 'rh')
+      }, activeSong.data.tracks[0].notes).start()
+
       setBassPart(newBassPart)
+      setMelodyPart(newMelodyPart)
       return () => {
         newMelodyPart.dispose()
         newBassPart.dispose()
@@ -141,7 +141,6 @@ const Piano = ({ songData }) => {
     if (pianoSampler.loaded) pianoSampler.triggerAttackRelease([note], 0.5)
   }
 
-  // Toggle play pause
   const handlePlaySong = () => {
     if (!isPlaying) {
       Tone.Transport.start()
