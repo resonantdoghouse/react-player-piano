@@ -8,10 +8,12 @@ const PianoControls = ({
   renderSongOptions,
   handleToggleReverb,
   reverbLevel,
+  setReverbLevel,
   handleToggleFilter,
   filterLevel,
   playbackSpeed,
   setPlaybackSpeed,
+  setFilterLevel,
 }) => {
   return (
     <section className="Piano__controls controls">
@@ -56,18 +58,47 @@ const PianoControls = ({
           >
             Filter
           </button>
-          <label>
-            Playback Speed
-            <input
-              onChange={(event) => setPlaybackSpeed(event.target.value)}
-              type="range"
-              min="30"
-              max="300"
-              value={playbackSpeed}
-              step="1"
-            />
-            {playbackSpeed} BPM
-          </label>
+
+          <div className="range-controls">
+            <label className="range-controls__label">
+              Speed
+              <input
+                onChange={(event) => setPlaybackSpeed(event.target.value)}
+                type="range"
+                min="30"
+                max="300"
+                value={playbackSpeed}
+                step="1"
+              />
+              {playbackSpeed} BPM
+            </label>
+
+            <label className="range-controls__label">
+              Filter Level
+              <input
+                onChange={(event) => setFilterLevel(event.target.value)}
+                type="range"
+                min="0"
+                max="1"
+                value={filterLevel}
+                step="0.1"
+              />
+              {filterLevel}
+            </label>
+
+            <label className="range-controls__label">
+              Reverb Level
+              <input
+                onChange={(event) => setReverbLevel(event.target.value)}
+                type="range"
+                min="0"
+                max="1"
+                value={reverbLevel}
+                step="0.1"
+              />
+              {reverbLevel}
+            </label>
+          </div>
         </div>
       </nav>
       {activeSong ? (

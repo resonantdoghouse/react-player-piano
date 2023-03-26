@@ -198,8 +198,10 @@ const Piano = ({ songData }) => {
           renderSongOptions={renderSongOptions}
           handleToggleReverb={handleToggleReverb}
           reverbLevel={reverbLevel}
+          setReverbLevel={setReverbLevel}
           handleToggleFilter={handleToggleFilter}
           filterLevel={filterLevel}
+          setFilterLevel={setFilterLevel}
           playbackSpeed={playbackSpeed}
           setPlaybackSpeed={setPlaybackSpeed}
         />
