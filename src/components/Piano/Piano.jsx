@@ -68,13 +68,14 @@ const Piano = ({ songData }) => {
   }, [])
 
   useEffect(() => {
-    setKeysArray(() => {
-      return Array.from(pianoKeysRef.current.children)
-    })
+    if (activeSong && !keysArray.length) {
+      setKeysArray(() => Array.from(pianoKeysRef.current.children))
+    }
+
     if (pianoKeysRef.current && !activeSong) {
       setActiveSong(randomFromArray(songData))
     }
-  }, [pianoKeysRef, songData, activeSong])
+  }, [pianoKeysRef, songData, activeSong, keysArray])
 
   useEffect(() => {
     filter.set({ wet: filterLevel })
