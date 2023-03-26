@@ -21,7 +21,6 @@ const Piano = ({ songData }) => {
 
   const animateKey = useCallback(
     (note, hand) => {
-      console.log('animatekeys')
       const keyElement = keysArray.find(
         (element) => element.getAttribute('data-note') === note.name
       )
