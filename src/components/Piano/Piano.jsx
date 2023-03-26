@@ -171,7 +171,7 @@ const Piano = ({ songData }) => {
 
   const handleToggleFilter = () => {
     if (filterLevel === 0) {
-      setFilterLevel(1)
+      setFilterLevel(0.5)
     } else {
       setFilterLevel(0)
     }
