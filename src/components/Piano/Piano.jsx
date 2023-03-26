@@ -68,6 +68,10 @@ const Piano = ({ songData }) => {
   }, [])
 
   useEffect(() => {
+    if (activeSong) {
+      console.log(Math.round(activeSong.data.header.tempos[0].bpm))
+      setPlaybackSpeed(Math.round(activeSong.data.header.tempos[0].bpm))
+    }
     if (activeSong && !keysArray.length) {
       setKeysArray(() => Array.from(pianoKeysRef.current.children))
     }
@@ -199,6 +203,7 @@ const Piano = ({ songData }) => {
           reverbLevel={reverbLevel}
           handleToggleFilter={handleToggleFilter}
           filterLevel={filterLevel}
+          playbackSpeed={playbackSpeed}
           setPlaybackSpeed={setPlaybackSpeed}
         />
         <div className="Piano__keys" ref={pianoKeysRef}>

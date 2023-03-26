@@ -10,6 +10,7 @@ const PianoControls = ({
   reverbLevel,
   handleToggleFilter,
   filterLevel,
+  playbackSpeed,
   setPlaybackSpeed,
 }) => {
   return (
@@ -60,6 +61,7 @@ const PianoControls = ({
               type="range"
               min="30"
               max="300"
+              value={playbackSpeed}
               step="1"
             />
           </label>
