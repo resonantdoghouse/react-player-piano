@@ -1,8 +1,9 @@
-import './PianoControls.scss'
+import './PianoControls.scss';
 
 const PianoControls = ({
   activeSong,
   isPlaying,
+  handleStopSong,
   handlePlaySong,
   handleSelectSong,
   renderSongOptions,
@@ -16,33 +17,38 @@ const PianoControls = ({
   setFilterLevel,
 }) => {
   return (
-    <section className="Piano__controls controls">
+    <section className="pianocontrols controls">
       <nav className="controls__nav">
-        <div>
+        <div className="btn-group">
+          {activeSong && (
+            <select
+              onChange={handleSelectSong}
+              defaultValue={activeSong.title}
+              className="pianosong-select"
+            >
+              {renderSongOptions()}
+            </select>
+          )}
+
+          <button
+            onClick={handleStopSong}
+            className="pianoplay-toggle controls__toggle-btn"
+          >
+            stop
+          </button>
           <button
             onClick={handlePlaySong}
-            className="Piano__play-toggle controls__toggle-btn"
+            className="pianoplay-toggle controls__toggle-btn"
           >
             {!isPlaying ? 'play' : 'pause'}
           </button>
-          {activeSong && (
-            <>
-              <select
-                onChange={handleSelectSong}
-                defaultValue={activeSong.title}
-                className="Piano__song-select"
-              >
-                {renderSongOptions()}
-              </select>
-            </>
-          )}
         </div>
         <div>
           <button
             onClick={handleToggleReverb}
-            className={`Piano__reverb-toggle controls__toggle-btn ${
+            className={`pianoreverb-toggle controls__toggle-btn ${
               reverbLevel !== 0
-                ? 'Piano__reverb-toggle--active controls__toggle-btn--active'
+                ? 'pianoreverb-toggle--active controls__toggle-btn--active'
                 : null
             }`}
           >
@@ -50,9 +56,9 @@ const PianoControls = ({
           </button>
           <button
             onClick={handleToggleFilter}
-            className={`Piano__filter-toggle controls__toggle-btn ${
+            className={`pianofilter-toggle controls__toggle-btn ${
               filterLevel !== 0
-                ? 'Piano__filter-toggle--active controls__toggle-btn--active'
+                ? 'pianofilter-toggle--active controls__toggle-btn--active'
                 : null
             }`}
           >
@@ -102,7 +108,7 @@ const PianoControls = ({
         </div>
       </nav>
       {activeSong ? (
-        <article className="Piano__activeSong activeSong">
+        <article className="pianoactiveSong activeSong">
           <header className="activeSong__header">
             <h2 className="activeSong__title">{activeSong.title}</h2>
             <p className="activeSong__artist">{activeSong.artist}</p>
@@ -117,7 +123,7 @@ const PianoControls = ({
             <p className="activeSong__bpm">
               BPM{' '}
               {activeSong.data.header.tempos.map((tempo, i) => {
-                return <span key={i}>{tempo.bpm.toFixed(2)}</span>
+                return <span key={i}>{tempo.bpm.toFixed(2)}</span>;
               })}
             </p>
           ) : null}
@@ -132,7 +138,7 @@ const PianoControls = ({
                     <li key={i} className="bpmList__item">
                       {tempo.bpm.toFixed(2)}
                     </li>
-                  )
+                  );
                 })}
               </ul>
             </div>
@@ -146,7 +152,7 @@ const PianoControls = ({
         </article>
       ) : null}
     </section>
-  )
-}
+  );
+};
 
-export default PianoControls
+export default PianoControls;

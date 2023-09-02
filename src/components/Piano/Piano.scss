@@ -1,6 +1,6 @@
 @use '../../styles/partials/variables';
 
-.Piano {
+.piano {
   min-width: 356px;
   background: variables.$piano-body-color;
   border-radius: 10px;
@@ -32,6 +32,9 @@
       background: transparent;
     }
   }
+  /*
+   * Keys
+   */
   &__keys {
     display: inline-flex;
     justify-content: center;
