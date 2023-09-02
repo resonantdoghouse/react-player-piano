@@ -24,7 +24,7 @@ const PianoControls = ({
             <select
               onChange={handleSelectSong}
               defaultValue={activeSong.title}
-              className="pianosong-select"
+              className="controls__select"
             >
               {renderSongOptions()}
             </select>
