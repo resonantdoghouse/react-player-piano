@@ -45,26 +45,25 @@ const PianoControls = ({
           />
         </div>
         <div>
-          <button
+          <Btn
             onClick={handleToggleReverb}
             className={`pianoreverb-toggle controls__toggle-btn ${
               reverbLevel !== 0
                 ? 'pianoreverb-toggle--active controls__toggle-btn--active'
                 : null
             }`}
-          >
-            Reverb
-          </button>
-          <button
+            text="Reverb"
+          />
+
+          <Btn
             onClick={handleToggleFilter}
             className={`pianofilter-toggle controls__toggle-btn ${
               filterLevel !== 0
                 ? 'pianofilter-toggle--active controls__toggle-btn--active'
                 : null
             }`}
-          >
-            Filter
-          </button>
+            text="Filter"
+          />
 
           <div className="range-controls">
             <label className="range-controls__label">
@@ -108,9 +107,7 @@ const PianoControls = ({
           </div>
         </div>
       </nav>
-      {activeSong ? (
-      <ActiveSong activeSong={activeSong}/>
-      ) : null}
+      {activeSong ? <ActiveSong activeSong={activeSong} /> : null}
     </section>
   );
 };
