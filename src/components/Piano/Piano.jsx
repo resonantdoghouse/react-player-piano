@@ -140,8 +140,15 @@ const Piano = ({ songData }) => {
   }, [playbackSpeed]);
 
   useEffect(() => {
-    console.log(Tone.Transport);
     Tone.Transport.stop();
+    setIsPlaying(false);
+    if (activeSong) {
+      if (activeSong.data.header.tempos) {
+        setPlaybackSpeed(Math.round(activeSong.data.header.tempos[0].bpm));
+      } else {
+        setPlaybackSpeed(activeSong.data.header.bpm);
+      }
+    }
   }, [activeSong]);
 
   const handleKeyPress = ({
