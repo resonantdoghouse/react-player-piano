@@ -1,7 +1,7 @@
-import * as Tone from 'tone'
+import * as Tone from 'tone';
 
-export const filter = new Tone.AutoFilter(4).start()
-export const reverb = new Tone.Reverb(0.6)
+export const filter = new Tone.AutoFilter(4).start();
+export const reverb = new Tone.Reverb(0.6);
 
 const pianoSampler = new Tone.Sampler(
   {
@@ -40,8 +40,8 @@ const pianoSampler = new Tone.Sampler(
     release: 1,
     baseUrl: './audio/piano-samples/',
   }
-)
+);
 
-pianoSampler.chain(filter, reverb, Tone.Destination)
+pianoSampler.chain(filter, reverb, Tone.Destination);
 
-export default pianoSampler
+export default pianoSampler;

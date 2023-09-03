@@ -1,8 +1,9 @@
 import './Btn.scss';
 
-function Btn({ text, onClick, className }) {
+function Btn({ text, onClick, className, disabled }) {
+  console.log(disabled);
   return (
-    <button onClick={onClick} className={`btn ${className}`}>
+    <button disabled={disabled} onClick={onClick} className={`btn ${className}`}>
       {text}
     </button>
   );

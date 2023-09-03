@@ -36,6 +36,7 @@ const PianoControls = ({
             onClick={handleStopSong}
             className="pianoplay-toggle controls__toggle-btn"
             text="stop"
+            disabled={!isPlaying}
           />
 
           <Btn
