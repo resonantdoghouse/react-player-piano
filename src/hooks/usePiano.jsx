@@ -169,6 +169,8 @@ export const usePiano = (songData) => {
   };
 
   const handleSelectSong = (event) => {
+    Tone.Transport.stop();
+    setIsPlaying(false);
     const { value } = event.target;
     const newSong = songData.find((song) => song.title === value);
     if (melodyPart) melodyPart.dispose();
