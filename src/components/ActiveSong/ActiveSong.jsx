@@ -26,12 +26,6 @@ function ActiveSong({ activeSong, activeSongData }) {
           {Math.round(Math.max(...activeSongData.header.tempos.map(t => t.bpm)))}
         </p>
       ) : null}
-
-      <img
-        src={activeSong.img}
-        alt={activeSong.title}
-        className="activeSong__img"
-      />
     </article>
   );
 }

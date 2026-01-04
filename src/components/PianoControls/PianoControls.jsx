@@ -70,19 +70,23 @@ const PianoControls = ({
           />
         </div>
         
-        <div className="range-controls">
-           <label className="range-controls__label">
-              Speed
-              <input
-                onChange={(event) => setPlaybackSpeed(event.target.value)}
+        <div className="speed-controls">
+          <label className="speed-controls__label">Speed: {playbackSpeed} BPM</label>
+          <div className="speed-controls__buttons">
+             <button onClick={() => setPlaybackSpeed(Number(playbackSpeed) - 5)} className="speed-controls__btn">-5</button>
+             <button onClick={() => setPlaybackSpeed(Number(playbackSpeed) - 1)} className="speed-controls__btn">-1</button>
+             <input
+                onChange={(event) => setPlaybackSpeed(Number(event.target.value))}
                 type="range"
                 min="30"
                 max="300"
                 value={playbackSpeed}
                 step="1"
+                className="speed-controls__slider"
               />
-              {playbackSpeed} BPM
-            </label>
+             <button onClick={() => setPlaybackSpeed(Number(playbackSpeed) + 1)} className="speed-controls__btn">+1</button>
+             <button onClick={() => setPlaybackSpeed(Number(playbackSpeed) + 5)} className="speed-controls__btn">+5</button>
+          </div>
         </div>
       </nav>
 

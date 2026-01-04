@@ -67,23 +67,47 @@
     }
   }
 
-  .range-controls {
+  .speed-controls {
     display: flex;
-    gap: 1rem;
-    align-items: center;
-    
-    &__label {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      font-size: 0.75rem;
-      color: variables.$color-text-secondary;
-      min-width: 100px;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
 
-      input[type=range] {
+    &__label {
+      font-size: 0.8rem;
+      color: variables.$color-text-secondary;
+    }
+
+    &__buttons {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    &__btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: variables.$color-text-primary;
+      border-radius: variables.$border-radius-sm;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+    
+    &__slider {
         -webkit-appearance: none;
         appearance: none;
-        width: 100%;
+        width: 100px;
         background: transparent;
 
         &::-webkit-slider-thumb {
@@ -108,7 +132,6 @@
         &:focus {
           outline: none;
         }
-      }
     }
   }
 }
