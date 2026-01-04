@@ -1,5 +1,8 @@
 @use '../../styles/partials/variables';
 
+// Variables inherited from main stylesheet or defined here if local scope needed
+// Assuming variables are available via @use
+
 .controls {
   background: variables.$bg-color-secondary;
   border-radius: variables.$border-radius-lg;
@@ -31,14 +34,14 @@
   }
 
   &__toggle-btn {
-    // Inherits .btn styles, add specific overrides if needed
     min-width: 80px;
+    transition: all 0.2s ease;
 
-    &.pianoreverb-toggle--active,
-    &.pianofilter-toggle--active {
-      background-color: variables.$color-accent-purple;
-      color: white;
+    &--active {
+      background-color: variables.$color-accent-purple !important;
+      color: white !important;
       box-shadow: 0 0 10px rgba(variables.$color-accent-purple, 0.5);
+      border-color: variables.$color-accent-purple !important;
     }
   }
 
@@ -66,18 +69,16 @@
 
   .range-controls {
     display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    width: 100%;
+    gap: 1rem;
+    align-items: center;
     
     &__label {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.85rem;
+      gap: 0.25rem;
+      font-size: 0.75rem;
       color: variables.$color-text-secondary;
-      flex: 1;
-      min-width: 150px;
+      min-width: 100px;
 
       input[type=range] {
         -webkit-appearance: none;
@@ -87,12 +88,12 @@
 
         &::-webkit-slider-thumb {
           -webkit-appearance: none;
-          height: 16px;
-          width: 16px;
+          height: 12px;
+          width: 12px;
           border-radius: 50%;
           background: variables.$color-accent-blue;
           cursor: pointer;
-          margin-top: -6px;
+          margin-top: -4px;
           box-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
 
@@ -111,6 +112,57 @@
     }
   }
 }
+
+// Effects Grid Layout
+.effects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  align-items: start;
+}
+
+.effect-column {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: variables.$border-radius-md;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+
+  &--active {
+    background: rgba(variables.$color-accent-purple, 0.1);
+    border-color: rgba(variables.$color-accent-purple, 0.3);
+  }
+
+  &__toggle {
+    width: 100%;
+    margin: 0;
+    justify-content: center;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    
+    &--active {
+       background-color: variables.$color-accent-purple;
+       color: white;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: fadeIn 0.3s ease;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 .activeSong {
   display: flex;

@@ -1,5 +1,21 @@
 import * as Tone from 'tone';
 
+// Effects
+export const chorus = new Tone.Chorus(4, 2.5, 0.5).start();
+export const phaser = new Tone.Phaser({
+	frequency: 15,
+	octaves: 5,
+	baseFrequency: 1000
+});
+export const delay = new Tone.FeedbackDelay("8n", 0.5);
+export const ringMod = new Tone.FrequencyShifter(0); // Using FrequencyShifter for ring mod-like effects
+
+// Initialize reduced wet levels (or dry)
+chorus.wet.value = 0;
+phaser.wet.value = 0;
+delay.wet.value = 0;
+ringMod.wet.value = 0;
+
 export const filter = new Tone.AutoFilter(4).start();
 export const reverb = new Tone.Reverb(4);
 
@@ -43,10 +59,13 @@ const pianoSampler = new Tone.Sampler({
 export const reverbGain = new Tone.Gain(0);
 reverb.wet.value = 1; // Reverb component is 100% wet, we control mix via reverbGain
 
-pianoSampler.connect(filter);
-filter.connect(Tone.Destination); // Dry path
+// Connect chain:
+// Sampler -> RingMod -> Phaser -> Chorus -> Delay -> Filter -> Destination
+pianoSampler.chain(ringMod, phaser, chorus, delay, filter, Tone.Destination);
+
+// Reverb send (parallel) from Filter
 filter.connect(reverb);
 reverb.connect(reverbGain);
-reverbGain.connect(Tone.Destination); // Wet path
+reverbGain.connect(Tone.Destination);
 
 export default pianoSampler;

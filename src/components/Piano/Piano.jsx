@@ -8,20 +8,21 @@ const Piano = ({ songData }) => {
     isPlaying,
     keyElements,
     activeSong,
-    filterLevel,
-    reverbLevel,
     playbackSpeed,
     handlePlaySong,
     handleStopSong,
     handleSelectSong,
-    handleToggleReverb,
-    handleToggleFilter,
     renderSongOptions,
-    setFilterLevel,
     setIsPlaying,
-    setReverbLevel,
     setPlaybackSpeed,
     activeSongData,
+    // Effects
+    reverbWet, setReverbWet, reverbDecay, setReverbDecay,
+    filterWet, setFilterWet, filterSpeed, setFilterSpeed,
+    chorusWet, setChorusWet, chorusSpeed, setChorusSpeed, chorusDepth, setChorusDepth,
+    phaserWet, setPhaserWet, phaserSpeed, setPhaserSpeed, phaserOctaves, setPhaserOctaves,
+    delayWet, setDelayWet, delayTime, setDelayTime, delayFeedback, setDelayFeedback,
+    ringModWet, setRingModWet, ringModFreq, setRingModFreq,
   } = usePiano(songData);
 
   if (!songData) {
@@ -41,14 +42,15 @@ const Piano = ({ songData }) => {
           handleSelectSong={handleSelectSong}
           handlePlaySong={handlePlaySong}
           renderSongOptions={renderSongOptions}
-          handleToggleReverb={handleToggleReverb}
-          reverbLevel={reverbLevel}
-          setReverbLevel={setReverbLevel}
-          handleToggleFilter={handleToggleFilter}
-          filterLevel={filterLevel}
-          setFilterLevel={setFilterLevel}
           playbackSpeed={playbackSpeed}
           setPlaybackSpeed={setPlaybackSpeed}
+          
+          reverbWet={reverbWet} setReverbWet={setReverbWet} reverbDecay={reverbDecay} setReverbDecay={setReverbDecay}
+          filterWet={filterWet} setFilterWet={setFilterWet} filterSpeed={filterSpeed} setFilterSpeed={setFilterSpeed}
+          chorusWet={chorusWet} setChorusWet={setChorusWet} chorusSpeed={chorusSpeed} setChorusSpeed={setChorusSpeed} chorusDepth={chorusDepth} setChorusDepth={setChorusDepth}
+          phaserWet={phaserWet} setPhaserWet={setPhaserWet} phaserSpeed={phaserSpeed} setPhaserSpeed={setPhaserSpeed} phaserOctaves={phaserOctaves} setPhaserOctaves={setPhaserOctaves}
+          delayWet={delayWet} setDelayWet={setDelayWet} delayTime={delayTime} setDelayTime={setDelayTime} delayFeedback={delayFeedback} setDelayFeedback={setDelayFeedback}
+          ringModWet={ringModWet} setRingModWet={setRingModWet} ringModFreq={ringModFreq} setRingModFreq={setRingModFreq}
         />
         <div className="piano__keys" ref={pianoKeysRef}>
           {keyElements}

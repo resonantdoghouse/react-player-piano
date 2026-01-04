@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import * as Tone from "tone";
 import Key from "../components/Key";
 import pianoKeys from "../components/Piano/pianoKeys.json";
-import pianoSampler, { filter, reverb, reverbGain } from "../components/Piano/pianoSampler";
+import pianoSampler, { filter, reverb, reverbGain, chorus, phaser, delay, ringMod } from "../components/Piano/pianoSampler";
 import { randomFromArray } from "../lib/utils.js";
 
 export const usePiano = (songData) => {
@@ -13,10 +13,36 @@ export const usePiano = (songData) => {
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(null);
   const [activeSongData, setActiveSongData] = useState(null);
-  const [filterLevel, setFilterLevel] = useState(0);
-  const [reverbLevel, setReverbLevel] = useState(0.8);
   const [playbackSpeed, setPlaybackSpeed] = useState(120);
   const [keysArray, setKeysArray] = useState([]);
+
+  // Effect States
+  // Reverb
+  const [reverbWet, setReverbWet] = useState(0); 
+  const [reverbDecay, setReverbDecay] = useState(4); 
+  
+  // Filter
+  const [filterWet, setFilterWet] = useState(0);
+  const [filterSpeed, setFilterSpeed] = useState(4);
+
+  // Chorus
+  const [chorusWet, setChorusWet] = useState(0);
+  const [chorusSpeed, setChorusSpeed] = useState(4);
+  const [chorusDepth, setChorusDepth] = useState(2);
+
+  // Phaser
+  const [phaserWet, setPhaserWet] = useState(0);
+  const [phaserSpeed, setPhaserSpeed] = useState(0.5);
+  const [phaserOctaves, setPhaserOctaves] = useState(3);
+
+  // Delay
+  const [delayWet, setDelayWet] = useState(0);
+  const [delayTime, setDelayTime] = useState(0.5); 
+  const [delayFeedback, setDelayFeedback] = useState(0.3);
+
+  // Ring Mod (FreqShifter)
+  const [ringModWet, setRingModWet] = useState(0);
+  const [ringModFreq, setRingModFreq] = useState(30);
 
   const animateKey = useCallback(
     (note, hand) => {
@@ -57,6 +83,7 @@ export const usePiano = (songData) => {
             data-note={key}
             handleKeyPress={handleKeyPress}
             isActive={false}
+            isSharp={false}
           />
         );
       }
@@ -89,17 +116,59 @@ export const usePiano = (songData) => {
     }
   }, [activeSong]);
 
-  useEffect(() => {
-    if (activeSongData) { // Only update if data is loaded
-      filter.set({ wet: filterLevel });
-    }
-  }, [filterLevel, activeSongData]);
+  // --- Effect Updates ---
 
+  // Reverb
   useEffect(() => {
-     if (activeSongData) {
-        reverbGain.gain.value = reverbLevel;
-     }
-  }, [reverbLevel, activeSongData]);
+    if (activeSongData) {
+        reverbGain.gain.rampTo(reverbWet, 0.1);
+        reverb.decay = reverbDecay;
+    }
+  }, [reverbWet, reverbDecay, activeSongData]);
+
+  // Filter (AutoFilter)
+  useEffect(() => {
+    if (activeSongData) {
+      filter.set({ wet: filterWet });
+      filter.frequency.rampTo(filterSpeed, 0.1);
+    }
+  }, [filterWet, filterSpeed, activeSongData]);
+
+  // Chorus
+  useEffect(() => {
+    if (activeSongData) {
+        chorus.wet.rampTo(chorusWet, 0.1);
+        chorus.frequency.rampTo(chorusSpeed, 0.1); 
+        chorus.depth = chorusDepth;
+    }
+  }, [chorusWet, chorusSpeed, chorusDepth, activeSongData]);
+
+  // Phaser
+  useEffect(() => {
+    if (activeSongData) {
+        phaser.wet.rampTo(phaserWet, 0.1);
+        phaser.frequency.rampTo(phaserSpeed, 0.1);
+        phaser.octaves = phaserOctaves;
+    }
+  }, [phaserWet, phaserSpeed, phaserOctaves, activeSongData]);
+
+  // Delay
+  useEffect(() => {
+    if (activeSongData) {
+        delay.wet.rampTo(delayWet, 0.1);
+        delay.delayTime.rampTo(delayTime, 0.1);
+        delay.feedback.rampTo(delayFeedback, 0.1);
+    }
+  }, [delayWet, delayTime, delayFeedback, activeSongData]);
+
+  // Ring Mod
+  useEffect(() => {
+    if (activeSongData) {
+       ringMod.wet.rampTo(ringModWet, 0.1);
+       ringMod.frequency.rampTo(ringModFreq, 0.1); 
+    }
+  }, [ringModWet, ringModFreq, activeSongData]);
+
 
   useEffect(() => {
     setKeyElements(createPianoKeys());
@@ -192,21 +261,6 @@ export const usePiano = (songData) => {
     setActiveSong((prevSong) => (prevSong !== newSong ? newSong : prevSong));
   };
 
-  const handleToggleReverb = () => {
-    if (reverbLevel === 0) {
-      setReverbLevel(0.8);
-    } else {
-      setReverbLevel(0);
-    }
-  };
-
-  const handleToggleFilter = () => {
-    if (filterLevel === 0) {
-      setFilterLevel(0.5);
-    } else {
-      setFilterLevel(0);
-    }
-  };
 
   const renderSongOptions = () =>
     songData
@@ -220,21 +274,38 @@ export const usePiano = (songData) => {
     melodyPart,
     bassPart,
     activeSong,
-    filterLevel,
-    reverbLevel,
+    // Global
     playbackSpeed,
+    setPlaybackSpeed,
+    // Effects Props
+    reverbWet, setReverbWet,
+    reverbDecay, setReverbDecay,
+    
+    filterWet, setFilterWet,
+    filterSpeed, setFilterSpeed,
+
+    chorusWet, setChorusWet,
+    chorusSpeed, setChorusSpeed,
+    chorusDepth, setChorusDepth,
+
+    phaserWet, setPhaserWet,
+    phaserSpeed, setPhaserSpeed,
+    phaserOctaves, setPhaserOctaves,
+
+    delayWet, setDelayWet,
+    delayTime, setDelayTime,
+    delayFeedback, setDelayFeedback,
+
+    ringModWet, setRingModWet,
+    ringModFreq, setRingModFreq,
+
     keysArray,
     handleKeyPress,
     handlePlaySong,
     handleStopSong,
     handleSelectSong,
-    handleToggleReverb,
-    handleToggleFilter,
     renderSongOptions,
-    setFilterLevel,
     setIsPlaying,
-    setReverbLevel,
-    setPlaybackSpeed,
     activeSongData,
   };
 };
