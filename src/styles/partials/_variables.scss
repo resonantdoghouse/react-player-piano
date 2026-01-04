@@ -1,12 +1,38 @@
 $color-white: rgba(255, 255, 255);
 $color-black: rgba(0, 0, 0);
-$color-vibrant-blue: rgb(73, 237, 255);
-$color-vibrant-green: rgb(15, 228, 129);
 
-$piano-body-color: rgb(16, 16, 16);
-$piano-key-color: rgb(255, 255, 255);
-$piano-key-sharp-color: $color-black;
-$paino-key-active-color: $color-vibrant-blue;
-$paino-key-active-lh-color: $color-vibrant-green;
-$paino-key-active-rh-color: $color-vibrant-blue;
+// Premium "Piano Room" Theme Palette
+$bg-color-primary: #3a3a3e; // Mid-grey main background
+$bg-color-secondary: #252529; // Slightly darker for panels/piano
+$bg-color-tertiary: #45454a; // Lighter for controls/inputs
+
+// Accents
+$color-accent-blue: #3b82f6; // A nice premium blue
+$color-accent-green: #10b981; // A crisp green
+$color-accent-purple: #8b5cf6; // Deep purple for flair
+
+$color-text-primary: #e5e5e5;
+$color-text-secondary: #a3a3a3;
+
+// Piano Specifics
+$piano-body-color: $bg-color-secondary;
+$piano-key-white: #fdfdfd;
+$piano-key-black: #111111;
+
+$piano-key-active-color: $color-accent-blue;
+$piano-key-active-lh-color: $color-accent-green;
+$piano-key-active-rh-color: $color-accent-blue;
+
 $piano-key-width: 2.3%;
+
+// Misc
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 16px;
+
+$shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-hard: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);

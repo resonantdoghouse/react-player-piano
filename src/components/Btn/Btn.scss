@@ -1,2 +1,51 @@
+@use "sass:color";
+@use '../../styles/partials/variables';
+
 .btn {
+  background-color: variables.$bg-color-tertiary;
+  color: variables.$color-text-primary;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: variables.$border-radius-sm;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: color.adjust(variables.$bg-color-tertiary, $lightness: 10%);
+    transform: translateY(-1px);
+    box-shadow: variables.$shadow-soft;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    &:hover {
+      transform: none;
+      box-shadow: none;
+      background-color: variables.$bg-color-tertiary;
+    }
+  }
+
+  &--active,
+  &.active { // Assuming active class might be added
+     background-color: variables.$color-accent-blue;
+     color: white;
+     border-color: transparent;
+     box-shadow: 0 0 8px rgba(variables.$color-accent-blue, 0.4);
+
+     &:hover {
+       background-color: color.adjust(variables.$color-accent-blue, $lightness: 5%);
+     }
+  }
 }

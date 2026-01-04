@@ -2,17 +2,19 @@
 
 .piano {
   min-width: 356px;
-  background: variables.$piano-body-color;
-  border-radius: 10px;
-  padding: 0.625rem;
+  background: variables.$piano-body-color; // Fallback
+  background: linear-gradient(145deg, rgba(30, 30, 30, 0.9) 0%, rgba(20, 20, 20, 0.95) 100%);
+  border-radius: variables.$border-radius-lg;
+  padding: 1.5rem;
   margin: 32px auto;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   overflow: hidden;
   width: 96%;
   max-width: 1080px;
-  display: flex;
-  box-shadow: 0px 3px 12px rgba(0, 0, 0, 1);
+  box-shadow: variables.$shadow-hard;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
 
   &__song-select {
     border-radius: 3px;
