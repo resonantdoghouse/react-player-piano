@@ -16,6 +16,9 @@ const Piano = ({ songData }) => {
     setIsPlaying,
     setPlaybackSpeed,
     activeSongData,
+    // Volume & Gain
+    masterVolume, setMasterVolume,
+    overdrive, setOverdrive,
     // Effects
     reverbWet, setReverbWet, reverbDecay, setReverbDecay,
     filterWet, setFilterWet, filterSpeed, setFilterSpeed,
@@ -44,6 +47,9 @@ const Piano = ({ songData }) => {
           renderSongOptions={renderSongOptions}
           playbackSpeed={playbackSpeed}
           setPlaybackSpeed={setPlaybackSpeed}
+          
+          masterVolume={masterVolume} setMasterVolume={setMasterVolume}
+          overdrive={overdrive} setOverdrive={setOverdrive}
           
           reverbWet={reverbWet} setReverbWet={setReverbWet} reverbDecay={reverbDecay} setReverbDecay={setReverbDecay}
           filterWet={filterWet} setFilterWet={setFilterWet} filterSpeed={filterSpeed} setFilterSpeed={setFilterSpeed}

@@ -8,13 +8,16 @@ export const phaser = new Tone.Phaser({
 	baseFrequency: 1000
 });
 export const delay = new Tone.FeedbackDelay("8n", 0.5);
+
 export const ringMod = new Tone.FrequencyShifter(0); // Using FrequencyShifter for ring mod-like effects
+export const distortion = new Tone.Distortion(0); // Overdrive/Warmth
 
 // Initialize reduced wet levels (or dry)
 chorus.wet.value = 0;
 phaser.wet.value = 0;
 delay.wet.value = 0;
 ringMod.wet.value = 0;
+distortion.wet.value = 1; // Always pass through, controlled by distortion amount
 
 export const filter = new Tone.AutoFilter(4).start();
 export const reverb = new Tone.Reverb(4);
@@ -60,8 +63,8 @@ export const reverbGain = new Tone.Gain(0);
 reverb.wet.value = 1; // Reverb component is 100% wet, we control mix via reverbGain
 
 // Connect chain:
-// Sampler -> RingMod -> Phaser -> Chorus -> Delay -> Filter -> Destination
-pianoSampler.chain(ringMod, phaser, chorus, delay, filter, Tone.Destination);
+// Sampler -> Distortion -> RingMod -> Phaser -> Chorus -> Delay -> Filter -> Destination
+pianoSampler.chain(distortion, ringMod, phaser, chorus, delay, filter, Tone.Destination);
 
 // Reverb send (parallel) from Filter
 filter.connect(reverb);

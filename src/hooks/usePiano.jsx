@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import * as Tone from "tone";
 import Key from "../components/Key";
 import pianoKeys from "../components/Piano/pianoKeys.json";
-import pianoSampler, { filter, reverb, reverbGain, chorus, phaser, delay, ringMod } from "../components/Piano/pianoSampler";
+import pianoSampler, { filter, reverb, reverbGain, chorus, phaser, delay, ringMod, distortion } from "../components/Piano/pianoSampler";
 import { randomFromArray } from "../lib/utils.js";
 
 export const usePiano = (songData) => {
@@ -15,6 +15,10 @@ export const usePiano = (songData) => {
   const [activeSongData, setActiveSongData] = useState(null);
   const [playbackSpeed, setPlaybackSpeed] = useState(120);
   const [keysArray, setKeysArray] = useState([]);
+
+  // Volume & Overdrive
+  const [masterVolume, setMasterVolume] = useState(-5); // dB
+  const [overdrive, setOverdrive] = useState(0); // 0-1
 
   // Effect States
   // Reverb
@@ -161,13 +165,22 @@ export const usePiano = (songData) => {
     }
   }, [delayWet, delayTime, delayFeedback, activeSongData]);
 
-  // Ring Mod
   useEffect(() => {
     if (activeSongData) {
        ringMod.wet.rampTo(ringModWet, 0.1);
        ringMod.frequency.rampTo(ringModFreq, 0.1); 
     }
   }, [ringModWet, ringModFreq, activeSongData]);
+
+  // Master Volume
+  useEffect(() => {
+    Tone.Destination.volume.rampTo(masterVolume, 0.1);
+  }, [masterVolume]);
+
+  // Overdrive
+  useEffect(() => {
+    distortion.distortion = overdrive;
+  }, [overdrive]);
 
 
   useEffect(() => {
@@ -275,8 +288,11 @@ export const usePiano = (songData) => {
     bassPart,
     activeSong,
     // Global
+
     playbackSpeed,
     setPlaybackSpeed,
+    masterVolume, setMasterVolume,
+    overdrive, setOverdrive,
     // Effects Props
     reverbWet, setReverbWet,
     reverbDecay, setReverbDecay,

@@ -40,7 +40,11 @@ const PianoControls = ({
 
   playbackSpeed,
   setPlaybackSpeed,
+
   activeSongData,
+  // Volume & Gain
+  masterVolume, setMasterVolume,
+  overdrive, setOverdrive,
 }) => {
   return (
     <section className="pianocontrols controls">
@@ -87,6 +91,34 @@ const PianoControls = ({
              <button onClick={() => setPlaybackSpeed(Number(playbackSpeed) + 1)} className="speed-controls__btn">+1</button>
              <button onClick={() => setPlaybackSpeed(Number(playbackSpeed) + 5)} className="speed-controls__btn">+5</button>
           </div>
+          </div>
+
+
+        <div className="volume-controls">
+           <div className="volume-group">
+              <label className="volume-controls__label">Master Vol: {Math.round(masterVolume)} dB</label>
+              <input
+                onChange={(event) => setMasterVolume(Number(event.target.value))}
+                type="range"
+                min="-60"
+                max="6"
+                value={masterVolume}
+                step="1"
+                className="volume-controls__slider"
+              />
+           </div>
+           <div className="volume-group">
+              <label className="volume-controls__label">Tube Drive: {Math.round(overdrive * 100)}%</label>
+              <input
+                onChange={(event) => setOverdrive(Number(event.target.value))}
+                type="range"
+                min="0"
+                max="1"
+                value={overdrive}
+                step="0.01"
+                className="volume-controls__slider"
+              />
+           </div>
         </div>
       </nav>
 
