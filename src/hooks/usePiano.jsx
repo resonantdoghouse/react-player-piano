@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import * as Tone from "tone";
 import Key from "../components/Key";
 import pianoKeys from "../components/Piano/pianoKeys.json";
-import pianoSampler, { filter, reverb } from "../components/Piano/pianoSampler";
+import pianoSampler, { filter, reverb, reverbGain } from "../components/Piano/pianoSampler";
 import { randomFromArray } from "../lib/utils.js";
 
 export const usePiano = (songData) => {
@@ -14,7 +14,7 @@ export const usePiano = (songData) => {
   const [activeSong, setActiveSong] = useState(null);
   const [activeSongData, setActiveSongData] = useState(null);
   const [filterLevel, setFilterLevel] = useState(0);
-  const [reverbLevel, setReverbLevel] = useState(0.65);
+  const [reverbLevel, setReverbLevel] = useState(0.8);
   const [playbackSpeed, setPlaybackSpeed] = useState(120);
   const [keysArray, setKeysArray] = useState([]);
 
@@ -97,7 +97,7 @@ export const usePiano = (songData) => {
 
   useEffect(() => {
      if (activeSongData) {
-        reverb.set({ wet: reverbLevel });
+        reverbGain.gain.value = reverbLevel;
      }
   }, [reverbLevel, activeSongData]);
 
@@ -111,7 +111,7 @@ export const usePiano = (songData) => {
         if (pianoSampler.loaded) {
           pianoSampler.triggerAttackRelease(
             note.name,
-            note.duration,
+            note.duration + 0.2,
             time,
             note.velocity
           );
@@ -123,7 +123,7 @@ export const usePiano = (songData) => {
         if (pianoSampler.loaded) {
           pianoSampler.triggerAttackRelease(
             note.name,
-            note.duration,
+            note.duration + 0.2,
             time,
             note.velocity
           );
@@ -141,7 +141,7 @@ export const usePiano = (songData) => {
   }, [activeSong, activeSongData, animateKey]);
 
   useEffect(() => {
-    Tone.Transport.bpm.rampTo(playbackSpeed, 2);
+    Tone.Transport.bpm.value = playbackSpeed;
   }, [playbackSpeed]);
 
   useEffect(() => {
@@ -194,7 +194,7 @@ export const usePiano = (songData) => {
 
   const handleToggleReverb = () => {
     if (reverbLevel === 0) {
-      setReverbLevel(0.65);
+      setReverbLevel(0.8);
     } else {
       setReverbLevel(0);
     }

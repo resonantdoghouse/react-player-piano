@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 
 export const filter = new Tone.AutoFilter(4).start();
-export const reverb = new Tone.Reverb(0.6);
+export const reverb = new Tone.Reverb(4);
 
 const pianoSampler = new Tone.Sampler({
   urls: {
@@ -36,10 +36,17 @@ const pianoSampler = new Tone.Sampler({
     A7: 'A7.mp3',
     C8: 'C8.mp3',
   },
-  release: 1,
+  release: 2,
   baseUrl: './audio/piano-samples/',
 });
 
-pianoSampler.chain(filter, reverb, Tone.Destination);
+export const reverbGain = new Tone.Gain(0);
+reverb.wet.value = 1; // Reverb component is 100% wet, we control mix via reverbGain
+
+pianoSampler.connect(filter);
+filter.connect(Tone.Destination); // Dry path
+filter.connect(reverb);
+reverb.connect(reverbGain);
+reverbGain.connect(Tone.Destination); // Wet path
 
 export default pianoSampler;
