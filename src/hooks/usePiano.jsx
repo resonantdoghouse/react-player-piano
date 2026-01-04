@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import * as Tone from 'tone';
-import Key from '../components/Key';
-import pianoKeys from '../components/Piano/pianoKeys.json';
-import pianoSampler, { filter, reverb } from '../components/Piano/pianoSampler';
-import { randomFromArray } from '../lib/utils.js';
+import { useState, useEffect, useRef, useCallback } from "react";
+import * as Tone from "tone";
+import Key from "../components/Key";
+import pianoKeys from "../components/Piano/pianoKeys.json";
+import pianoSampler, { filter, reverb } from "../components/Piano/pianoSampler";
+import { randomFromArray } from "../lib/utils.js";
 
 export const usePiano = (songData) => {
   const pianoKeysRef = useRef(null);
@@ -20,15 +20,15 @@ export const usePiano = (songData) => {
   const animateKey = useCallback(
     (note, hand) => {
       const keyElement = keysArray.find(
-        (element) => element.getAttribute('data-note') === note.name
+        (element) => element.getAttribute("data-note") === note.name
       );
       if (keyElement) {
         keyElement.classList.add(
-          hand === 'rh' ? 'Key--rh-active' : 'Key--lh-active'
+          hand === "rh" ? "Key--rh-active" : "Key--lh-active"
         );
         setTimeout(() => {
-          keyElement.classList.remove('Key--lh-active');
-          keyElement.classList.remove('Key--rh-active');
+          keyElement.classList.remove("Key--lh-active");
+          keyElement.classList.remove("Key--rh-active");
         }, note.duration * 600);
       }
     },
@@ -37,7 +37,7 @@ export const usePiano = (songData) => {
 
   const createPianoKeys = useCallback(() => {
     const mappedKeys = pianoKeys.map((key, i) => {
-      if (key.includes('#')) {
+      if (key.includes("#")) {
         return (
           <Key
             key={i}
@@ -102,7 +102,7 @@ export const usePiano = (songData) => {
             note.velocity
           );
         }
-        animateKey(note, 'lh');
+        animateKey(note, "lh");
       }, activeSong.data.tracks[1].notes).start(0);
 
       const newMelodyPart = new Tone.Part((time, note) => {
@@ -114,7 +114,7 @@ export const usePiano = (songData) => {
             note.velocity
           );
         }
-        animateKey(note, 'rh');
+        animateKey(note, "rh");
       }, activeSong.data.tracks[0].notes).start();
 
       setBassPart(newBassPart);
@@ -158,7 +158,7 @@ export const usePiano = (songData) => {
       setIsPlaying(false);
       Tone.Transport.pause();
     }
-    if (Tone.context.state !== 'running') {
+    if (Tone.context.state !== "running") {
       Tone.context.resume();
     }
   };
@@ -220,6 +220,6 @@ export const usePiano = (songData) => {
     setFilterLevel,
     setIsPlaying,
     setReverbLevel,
-    setPlaybackSpeed
+    setPlaybackSpeed,
   };
 };
