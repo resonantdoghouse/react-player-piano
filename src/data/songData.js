@@ -17,6 +17,7 @@ import gymnopedie1 from '../data/songs/gymnopedie1.json'
 import chromaticFantasy from '../data/songs/chromaticFantasy.json'
 import prelude from '../data/songs/preludeInG.json'
 import minuetInG from '../data/songs/minuetInG.json'
+import skyrimMainTheme from '../data/songs/skyrimMainTheme.json'
 
 // images, album covers etc...
 import jurassicParkImage from '../assets/images/jurassic-park.jpg'
@@ -32,6 +33,7 @@ import scottJoplinImage from '../assets/images/Scott-Joplin.jpg'
 import superMarioImage from '../assets/images/super-mario.jpg'
 import squarepusherImage from '../assets/images/squarepusher.jpg'
 import chopinImage from '../assets/images/chopin.jpg'
+import skyrimImage from '../assets/images/skyrim.jpg'
 
 const songData = [
   {
@@ -141,6 +143,12 @@ const songData = [
     artist: 'Johann Sebastian Bach',
     data: prelude,
     img: bachImage,
+  },
+  {
+    title: 'Skyrim Main Theme',
+    artist: 'Jeremy Soule',
+    data: skyrimMainTheme,
+    img: skyrimImage,
   },
 ]
 
