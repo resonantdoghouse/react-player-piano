@@ -17,6 +17,7 @@ const PianoControls = ({
   playbackSpeed,
   setPlaybackSpeed,
   setFilterLevel,
+  activeSongData,
 }) => {
   return (
     <section className="pianocontrols controls">
@@ -108,7 +109,7 @@ const PianoControls = ({
           </div>
         </div>
       </nav>
-      {activeSong ? <ActiveSong activeSong={activeSong} /> : null}
+      {activeSong && activeSongData ? <ActiveSong activeSong={activeSong} activeSongData={activeSongData} /> : null}
     </section>
   );
 };

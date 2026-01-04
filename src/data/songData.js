@@ -1,24 +1,3 @@
-// song data
-import avril14 from '../data/songs/avril14.json'
-import aisatsana from '../data/songs/aisatsana.json'
-import canon from '../data/songs/canon.json'
-import jynweythekYlow from '../data/songs/jynweythekYlow.json'
-import tommib from '../data/songs/tommib.json'
-import superMario from '../data/songs/superMario.json'
-import jurassicPark from '../data/songs/jurassicPark.json'
-import theEntertainer from '../data/songs/entertainer.json'
-import airOnTheGString from '../data/songs/airOnTheGString.json'
-import chopinNocturnOpN2 from '../data/songs/chopinNocturneOp9N2.json'
-import moonlightSonata from '../data/songs/moonlightSonata.json'
-import lotrMainTheme from '../data/songs/lotrMainTheme.json'
-import zeldasLullaby from '../data/songs/zeldasLullaby.json'
-import whiterShadeOfPale from '../data/songs/whiterShadeOfPale.json'
-import gymnopedie1 from '../data/songs/gymnopedie1.json'
-import chromaticFantasy from '../data/songs/chromaticFantasy.json'
-import prelude from '../data/songs/preludeInG.json'
-import minuetInG from '../data/songs/minuetInG.json'
-import skyrimMainTheme from '../data/songs/skyrimMainTheme.json'
-
 // images, album covers etc...
 import jurassicParkImage from '../assets/images/jurassic-park.jpg'
 import bachImage from '../assets/images/Johann_Sebastian_Bach.jpg'
@@ -39,115 +18,115 @@ const songData = [
   {
     title: 'Minuet In G',
     artist: 'Johann Sebastian Bach',
-    data: minuetInG,
+    loadData: () => import('../data/songs/minuetInG.json'),
     img: bachImage,
   },
   {
     title: 'Avril 14',
     artist: 'Aphex Twin',
-    data: avril14,
+    loadData: () => import('../data/songs/avril14.json'),
     img: aphexTwinImage,
   },
   {
     title: 'Aisatsana',
     artist: 'Aphex Twin',
-    data: aisatsana,
+    loadData: () => import('../data/songs/aisatsana.json'),
     img: aphexTwinImage,
   },
   {
     title: 'Canon',
     artist: 'Johann Pachelbel',
-    data: canon,
+    loadData: () => import('../data/songs/canon.json'),
     img: pachelbeJohannImage,
   },
   {
     title: 'Jynweythek Ylow',
     artist: 'Aphex Twin',
-    data: jynweythekYlow,
+    loadData: () => import('../data/songs/jynweythekYlow.json'),
     img: aphexTwinImage,
   },
   {
     title: 'Tommib',
     artist: 'Squarepusher',
-    data: tommib,
+    loadData: () => import('../data/songs/tommib.json'),
     img: squarepusherImage,
   },
   {
     title: 'Super Mario Bros',
     artist: 'Koji Kondo',
-    data: superMario,
+    loadData: () => import('../data/songs/superMario.json'),
     img: superMarioImage,
   },
   {
     title: 'Jurassic Park',
     artist: 'John Williams',
-    data: jurassicPark,
+    loadData: () => import('../data/songs/jurassicPark.json'),
     img: jurassicParkImage,
   },
   {
     title: 'The Entertainer',
     artist: 'Scott Joplin',
-    data: theEntertainer,
+    loadData: () => import('../data/songs/entertainer.json'),
     img: scottJoplinImage,
   },
   {
     title: 'Air on the G String',
     artist: 'Johann Sebastian Bach',
-    data: airOnTheGString,
+    loadData: () => import('../data/songs/airOnTheGString.json'),
     img: bachImage,
   },
   {
     title: 'Nocturne Op.9 No.2',
     artist: 'Chopin',
-    data: chopinNocturnOpN2,
+    loadData: () => import('../data/songs/chopinNocturneOp9N2.json'),
     img: chopinImage,
   },
   {
     title: 'Moonlight Sonata',
     artist: 'Ludwig Van Beethoven',
-    data: moonlightSonata,
+    loadData: () => import('../data/songs/moonlightSonata.json'),
     img: beethovenImage,
   },
   {
     title: 'Lord Of The Rings - Medley',
     artist: 'Howard Shore, arranged by Alex Lag',
-    data: lotrMainTheme,
+    loadData: () => import('../data/songs/lotrMainTheme.json'),
     img: lotrJohannImage,
   },
   {
     title: "Zelda's Lullaby",
     artist: 'Koji Kondo',
-    data: zeldasLullaby,
+    loadData: () => import('../data/songs/zeldasLullaby.json'),
     img: zeldaImage,
   },
   {
     title: 'A Whiter Shade Of Pale',
     artist: 'Procol Harum',
-    data: whiterShadeOfPale,
+    loadData: () => import('../data/songs/whiterShadeOfPale.json'),
     img: procolHarumImage,
   },
   {
     title: 'Gymnopédie No. 1',
     artist: 'Eric Satie',
-    data: gymnopedie1,
+    loadData: () => import('../data/songs/gymnopedie1.json'),
     img: ericsatieImage,
   },
   {
     title: 'Chromatic Fantasy',
     artist: 'Johann Sebastian Bach',
-    data: chromaticFantasy,
+    loadData: () => import('../data/songs/chromaticFantasy.json'),
     img: bachImage,
   },
   {
     title: 'Prélude',
     artist: 'Johann Sebastian Bach',
-    data: prelude,
+    loadData: () => import('../data/songs/preludeInG.json'),
     img: bachImage,
   },
   {
     title: 'Skyrim Main Theme',
     artist: 'Jeremy Soule',
-    data: skyrimMainTheme,
+    loadData: () => import('../data/songs/skyrimMainTheme.json'),
     img: skyrimImage,
   },
 ]

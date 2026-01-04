@@ -21,6 +21,7 @@ const Piano = ({ songData }) => {
     setIsPlaying,
     setReverbLevel,
     setPlaybackSpeed,
+    activeSongData,
   } = usePiano(songData);
 
   if (!songData) {
@@ -33,6 +34,7 @@ const Piano = ({ songData }) => {
       <div className="piano">
         <PianoControls
           activeSong={activeSong}
+          activeSongData={activeSongData}
           isPlaying={isPlaying}
           handleStopSong={handleStopSong}
           setIsPlaying={setIsPlaying}

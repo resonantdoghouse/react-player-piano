@@ -6,6 +6,15 @@ export default defineConfig({
   plugins: [react(), svgr()],
   build: {
     outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          tone: ['tone'],
+          ui: ['react-select'],
+        },
+      },
+    },
   },
   server: {
     open: true,

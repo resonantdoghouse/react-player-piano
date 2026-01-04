@@ -12,6 +12,7 @@ export const usePiano = (songData) => {
   const [melodyPart, setMelodyPart] = useState(null);
   const [bassPart, setBassPart] = useState();
   const [activeSong, setActiveSong] = useState(null);
+  const [activeSongData, setActiveSongData] = useState(null);
   const [filterLevel, setFilterLevel] = useState(0);
   const [reverbLevel, setReverbLevel] = useState(0.65);
   const [playbackSpeed, setPlaybackSpeed] = useState(120);
@@ -64,11 +65,11 @@ export const usePiano = (songData) => {
   }, []);
 
   useEffect(() => {
-    if (activeSong) {
-      if (activeSong.data.header.tempos) {
-        setPlaybackSpeed(Math.round(activeSong.data.header.tempos[0].bpm));
+    if (activeSong && activeSongData) {
+      if (activeSongData.header.tempos) {
+        setPlaybackSpeed(Math.round(activeSongData.header.tempos[0].bpm));
       } else {
-        setPlaybackSpeed(activeSong.data.header.bpm);
+        setPlaybackSpeed(activeSongData.header.bpm);
       }
     }
     if (activeSong && !keysArray.length) {
@@ -77,22 +78,35 @@ export const usePiano = (songData) => {
     if (pianoKeysRef.current && !activeSong) {
       setActiveSong(randomFromArray(songData));
     }
-  }, [pianoKeysRef, songData, activeSong, keysArray]);
+  }, [pianoKeysRef, songData, activeSong, activeSongData, keysArray]);
 
   useEffect(() => {
-    filter.set({ wet: filterLevel });
-  }, [filterLevel]);
+    if (activeSong) {
+      setActiveSongData(null); // Clear previous song data
+      activeSong.loadData().then((module) => {
+        setActiveSongData(module.default || module);
+      });
+    }
+  }, [activeSong]);
 
   useEffect(() => {
-    reverb.set({ wet: reverbLevel });
-  }, [reverbLevel]);
+    if (activeSongData) { // Only update if data is loaded
+      filter.set({ wet: filterLevel });
+    }
+  }, [filterLevel, activeSongData]);
+
+  useEffect(() => {
+     if (activeSongData) {
+        reverb.set({ wet: reverbLevel });
+     }
+  }, [reverbLevel, activeSongData]);
 
   useEffect(() => {
     setKeyElements(createPianoKeys());
   }, [createPianoKeys]);
 
   useEffect(() => {
-    if (activeSong) {
+    if (activeSong && activeSongData) {
       const newBassPart = new Tone.Part((time, note) => {
         if (pianoSampler.loaded) {
           pianoSampler.triggerAttackRelease(
@@ -103,7 +117,7 @@ export const usePiano = (songData) => {
           );
         }
         animateKey(note, "lh");
-      }, activeSong.data.tracks[1].notes).start(0);
+      }, activeSongData.tracks[1].notes).start(0);
 
       const newMelodyPart = new Tone.Part((time, note) => {
         if (pianoSampler.loaded) {
@@ -115,7 +129,7 @@ export const usePiano = (songData) => {
           );
         }
         animateKey(note, "rh");
-      }, activeSong.data.tracks[0].notes).start();
+      }, activeSongData.tracks[0].notes).start(0);
 
       setBassPart(newBassPart);
       setMelodyPart(newMelodyPart);
@@ -124,7 +138,7 @@ export const usePiano = (songData) => {
         newBassPart.dispose();
       };
     }
-  }, [activeSong, animateKey]);
+  }, [activeSong, activeSongData, animateKey]);
 
   useEffect(() => {
     Tone.Transport.bpm.rampTo(playbackSpeed, 2);
@@ -133,14 +147,14 @@ export const usePiano = (songData) => {
   useEffect(() => {
     Tone.Transport.stop();
     setIsPlaying(false);
-    if (activeSong) {
-      if (activeSong.data.header.tempos) {
-        setPlaybackSpeed(Math.round(activeSong.data.header.tempos[0].bpm));
+    if (activeSong && activeSongData) {
+      if (activeSongData.header.tempos) {
+        setPlaybackSpeed(Math.round(activeSongData.header.tempos[0].bpm));
       } else {
-        setPlaybackSpeed(activeSong.data.header.bpm);
+        setPlaybackSpeed(activeSongData.header.bpm);
       }
     }
-  }, [activeSong]);
+  }, [activeSong, activeSongData]);
 
   const handleKeyPress = ({
     target: {
@@ -154,6 +168,7 @@ export const usePiano = (songData) => {
     if (!isPlaying) {
       setIsPlaying(true);
       Tone.Transport.start();
+      console.log('Playing song...', { activeSong, activeSongData, state: Tone.Transport.state });
     } else {
       setIsPlaying(false);
       Tone.Transport.pause();
@@ -173,8 +188,7 @@ export const usePiano = (songData) => {
     setIsPlaying(false);
     const { value } = event.target;
     const newSong = songData.find((song) => song.title === value);
-    if (melodyPart) melodyPart.dispose();
-    if (bassPart) bassPart.dispose();
+    // Removed manual dispose, relying on UseEffect cleanup
     setActiveSong((prevSong) => (prevSong !== newSong ? newSong : prevSong));
   };
 
@@ -221,5 +235,6 @@ export const usePiano = (songData) => {
     setIsPlaying,
     setReverbLevel,
     setPlaybackSpeed,
+    activeSongData,
   };
 };
