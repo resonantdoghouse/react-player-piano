@@ -20,18 +20,11 @@ function ActiveSong({ activeSong, activeSongData }) {
 
       {activeSongData.header.tempos &&
       activeSongData.header.tempos.length > 1 ? (
-        <div className="activeSong__bpm">
-          BPMs
-          <ul className="activeSong__bpmList bpmList">
-            {activeSongData.header.tempos.map((tempo, i) => {
-              return (
-                <li key={i} className="bpmList__item">
-                  {tempo.bpm.toFixed(2)}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <p className="activeSong__bpm">
+          BPM{' '}
+          {Math.round(Math.min(...activeSongData.header.tempos.map(t => t.bpm)))} -{' '}
+          {Math.round(Math.max(...activeSongData.header.tempos.map(t => t.bpm)))}
+        </p>
       ) : null}
 
       <img
